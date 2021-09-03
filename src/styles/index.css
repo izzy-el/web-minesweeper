@@ -63,10 +63,28 @@
 
 #login-button {
     background-color: #1471A3;
+    width: 400px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #signup-button {
     background-color: #dd3131;
+    width: 400px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button {

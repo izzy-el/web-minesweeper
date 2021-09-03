@@ -6,10 +6,6 @@
     justify-content: center;
     background: rgb(20,113,163);
     background: linear-gradient(42069deg, rgba(20,113,163,1) 0%, rgba(221,49,49,1) 100%);
-    /* background-image: url("../assets/bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; */
 }
 
 #login {
@@ -23,7 +19,6 @@
     align-items: center;
     gap: 50px;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.788);
-
 }
 
 #login-header {
@@ -32,7 +27,6 @@
     align-items: center;
     justify-content: center;
     gap: 50px;
-    
 }
 
 .header-logo {

@@ -5,10 +5,13 @@
 
 h1 {
     font-size: 28px;
+    font-family: "Lato", sans-serif;
+    font-weight: bold;
 }
 
 h2 {
     font-size: 24px;
+    font-family: "Lato", sans-serif;
 }
 
 h3 {
@@ -17,8 +20,18 @@ h3 {
 
 p {
     font-size: 16px;
+    font-family: "Poppins", sans-serif;
 }
 
 a {
-    
+    text-decoration: none;
+    color: white;
+}
+
+input {
+    font-family: "Poppins", sans-serif;
+}
+
+button {
+    font-family: "Poppins", sans-serif;
 }

@@ -25,6 +25,7 @@ p {
 
 a {
     text-decoration: none;
+    border-radius: 5px;
     color: white;
     font-family: "Poppins", sans-serif;
 }
@@ -35,4 +36,5 @@ input {
 
 button {
     font-family: "Poppins", sans-serif;
+    cursor: pointer;
 }

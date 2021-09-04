@@ -1,0 +1,154 @@
+#game-page {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background: rgb(20,113,163);
+    background: linear-gradient(42069deg, rgba(20,113,163,1) 0%, rgba(221,49,49,1) 100%);
+}
+
+#top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0D1117;
+    width: 100vw;
+    height: 5vh;    
+    padding: 15px;
+    box-shadow: 3px 4px 20px rgba(0, 0, 0, 0.555)
+}   
+
+#menu-img {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+#left-menu {
+    height: 100%;
+}
+
+#middle-info {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+}
+
+#right-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+    height: 100%;
+}
+
+#cheat-button {
+    width: 4vh;
+    height: 4vh;
+    vertical-align: center;
+}
+
+#settings-button {
+    width: 4vh;
+    height: 4vh;
+    vertical-align: center;
+}
+
+.top-button {
+    width: 4vh;
+    height: 4vh;
+    vertical-align: center;
+}
+
+.middle-button {
+    height: 100%;
+    width: 8vw;
+    background-color: white;
+    border: none;
+    font-size: 24px;
+}
+
+
+#timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-space {
+    height: 55vh;
+    width: 80vw;
+    top: 12vh;
+    position: absolute;
+    /* background-color: rgb(218, 218, 218); */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game {
+    height: 100%;
+    width: 56vh;
+}
+
+#game-history {
+    height: 30vh;
+    width: 80vw;
+
+    position: absolute;
+    left: 10vw;
+    bottom: 0;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.658);
+
+    background-color: rgb(218, 218, 218);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+#history-title {
+    height: 10vh;
+    width: 70vw;
+    margin: auto;   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#ranking-button {
+    height: 40px;
+    width: 150px;
+    background-color: orange;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#scrollable-history{
+    height: 20vh;
+    overflow-y: scroll;
+}
+
+.history-record {
+    height: 40px;
+    width: 70vw;
+    margin: auto;
+    border-radius: 5px;
+    background-color: green;
+    margin-bottom: 5px;
+}
+
+button:hover{
+    filter: brightness(120%);
+    transition: 1s;
+}

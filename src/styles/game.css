@@ -1,10 +1,18 @@
+body {
+    background: linear-gradient(-45deg, #2c1957, #d93ce7, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 60s ease infinite;
+}
+
 #game-page {
     height: 100vh;
-    width: 100vw;
+    max-width: 100vw !important;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
-    background: rgb(20,113,163);
-    background: linear-gradient(42069deg, rgba(20,113,163,1) 0%, rgba(221,49,49,1) 100%);
+    background-color: rgba(0, 0, 0, 0.555);
+    /* background: rgb(20,113,163);
+    background: linear-gradient(42069deg, rgba(20,113,163,1) 0%, rgba(221,49,49,1) 100%);  */
 }
 
 #top-bar {
@@ -14,8 +22,9 @@
     align-items: center;
     background-color: #0D1117;
     width: 100vw;
-    height: 5vh;    
-    padding: 15px;
+    max-height: 5vh;  
+    margin: 0;
+    padding: 15px; 
     box-shadow: 3px 4px 20px rgba(0, 0, 0, 0.555)
 }   
 
@@ -34,11 +43,10 @@
 #middle-info {
     height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: row ;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    height: 100%;
 }
 
 #right-menu {
@@ -81,6 +89,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: black;
 }
 
 #game-space {
@@ -109,7 +118,7 @@
     bottom: 0;
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.658);
 
-    background-color: rgb(218, 218, 218);
+    background-color: #0D1117;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
@@ -122,6 +131,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    color: rgb(245, 245, 245);
 }
 
 #ranking-button {
@@ -144,11 +154,158 @@
     width: 70vw;
     margin: auto;
     border-radius: 5px;
-    background-color: green;
-    margin-bottom: 5px;
+    background-color: #0ae678;
+    margin-bottom: 10px 
 }
 
 button:hover{
     filter: brightness(120%);
     transition: 1s;
+}
+  
+  
+ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+  
+li {
+    color: #fff;
+    background: #0D1117;
+    display: block;
+    float: left;
+    padding: 1rem;
+    position: relative;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+    
+li:hover, li:focus-within {
+    background: #414141;
+    cursor: pointer;
+}
+
+li:focus-within a {
+    outline: none;
+}
+  
+.menu-item ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+    left: 0;
+    display: none;
+}
+
+.menu-item:hover > ul,
+ul:focus {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
+  
+.menu-item ul li {
+    clear: both;
+    width: 100%;
+}
+
+.menu-item {
+    color: #fff;
+    background: #0D1117;
+    display: block;
+    float: left;
+    padding: 1rem;
+    position: relative;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+
+#left-item {
+    position: fixed;
+    top:6vh;
+    left:0;
+    z-index: 2;
+}
+
+.popup-no-click {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    transition: 100ms;
+    visibility: hidden;
+    opacity: 0;
+
+}
+
+.popup-no-click:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    color: white;
+    margin: 50px auto;
+    margin-top: 70px;
+    padding: 40px;
+    background: #0D1117;
+    border-radius: 5px;
+    height: 35vh;
+    width: 35vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.popup .slider input{
+    width: 250px;
+    color: white;
+}
+
+.popup .close:hover {
+    color: red;
+}
+
+@media screen and (max-width: 700px){
+    .box {
+        width: 70%;
+    }
+    .popup {
+        width: 70%;
+    }
+}
+
+#button-aplicar {
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

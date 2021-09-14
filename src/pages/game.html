@@ -10,6 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap" rel="stylesheet">
         <title>Mineles - Jogo</title>
+        <script src="../script.js"></script>
     </head>
     <body>
         <!-- Game Page -->
@@ -17,33 +18,52 @@
 
             <!-- Top Bar -->
             <header id="top-bar">
-                <!-- Left Menu -->
-                <div id="left-menu">
-                    <a href=""><img src="../assets/menu.png" alt="menu" id="menu-img" class="top-button"></a>
+                <div class="menu-item">
+                    <!-- Left Menu -->
+                    <div id="left-menu">
+                        <img src="../assets/menu.png" alt="menu" id="menu-img" class="top-button">
+                    </div>
+                    <ul id="left-item" class="dropdown">
+                        <li><a href="#">Meu Perfil</a></li>
+                        <li><a href="../pages/index.html">Sair</a></li>
+                    </ul>
                 </div>
 
-                <!-- Middle Infos -->
-                <div id="middle-info">
-                    <!-- Normal -->
-                    <button id="normal-button" class="middle-button">Normal</button>
+                <div class="menu-item">
+                    <!-- Middle Infos -->
+                    <div id="middle-info">
+                        <!-- Normal -->
+                        <button id="normal-button" class="middle-button">Normal</button>
 
-                    <!-- Rivotril -->
-                    <button id="rivotril-button" class="middle-button">Rivotril</button>
+                        <!-- Rivotril -->
+                        <button id="rivotril-button" class="middle-button">Rivotril</button>
 
-                    <!-- Timer -->
-                    <p id="timer" class="middle-button">00:00</p>
+                        <!-- Timer -->
+                        <p id="timer" class="middle-button">00:00</p>
+                    </div>
                 </div>
 
-                <!-- Right Menu -->
-                <div id="right-menu">
-                    <a href=""><img src="../assets/cheat.png" alt="cheat" id="cheat-button" class="top-button"></a>
-                    <a href=""><img src="../assets/settings.png" alt="settings" id="settings-button" class="top-button"></a>
+                <div> 
+                    <div class="menu-item">
+                        <!-- Cheat button -->
+                        <div id="right-menu">
+                            <a href=""><img src="../assets/cheat.png" alt="cheat" id="cheat-button" class="top-button"></a>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <!-- Settings -->
+                        <div class="right-menu">
+                            <a href="#popup-settings"><img src="../assets/settings.png" alt="settings" id="settings-button" class="top-button"></a>
+                        </div>
+                    </div>
                 </div>
             </header>
 
             <!-- Game -->
             <div id="game-space">
-                <img src="../assets/tmp-minesweeper-black-1click.png" alt="minesweeper" id="game">
+                <!-- <img src="../assets/tmp-minesweeper-black-1click.png" alt="minesweeper" id="game"> -->
+                <img src="../assets/tmp-minesweeper-black.png" alt="minesweeper" id="game">
             </div>
 
             <div id="game-history">
@@ -55,11 +75,11 @@
                 <div id="scrollable-history">
                     <div class="history-record">     
                     </div>
-                    <div class="history-record">     
+                    <div style="background-color: #FF2345;" class="history-record">     
                     </div>
                     <div class="history-record">     
                     </div>
-                    <div class="history-record">     
+                    <div style="background-color: #FF2345;" class="history-record">     
                     </div>
                     <div class="history-record">     
                     </div>
@@ -69,7 +89,70 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Popup Settings -->
+            <div id="popup-settings" class="popup-no-click">
+                <div class="popup">
+                    <!-- Close -->
+                    <a class="close" href="#">&times</a>
+
+                    <datalist id="tickmarks-size">
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                        <option value="6"></option>
+                        <option value="7"></option>
+                        <option value="8"></option>
+                        <option value="9"></option>
+                        <option value="10"></option>
+                        <option value="11"></option>
+                        <option value="12"></option>
+                        <option value="13"></option>
+                        <option value="14"></option>
+                        <option value="15"></option>
+                        <option value="16"></option>
+                        <option value="17"></option>
+                        <option value="18"></option>
+                        <option value="19"></option>
+                        <option value="20"></option>
+                    </datalist>
+
+                    <datalist id="tickmarks-bombs">
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                        <option value="6"></option>
+                        <option value="7"></option>
+                        <option value="8"></option>
+                        <option value="9"></option>
+                        <option value="10"></option>
+                        <option value="11"></option>
+                        <option value="12"></option>
+                        <option value="13"></option>
+                        <option value="14"></option>
+                        <option value="15"></option>
+                        <option value="16"></option>
+                        <option value="17"></option>
+                        <option value="18"></option>
+                        <option value="19"></option>
+                        <option value="20"></option>
+                    </datalist>
+
+                    <!-- Tamanho -->
+                    <div class="slider">
+                        <p>Tamanho: </p> 
+                        <input type="range" list="tickmarks-size" min="3" max="20" step="1" name="grid-size" id="grid-size">
+                    </div>
+
+                    <!-- Numero de bombas -->
+                    <div class="slider">
+                        <p>Bombas: </p> 
+                        <input type="range" list="tickmarks-bombs" min="3" max="20" step="1" name="n-bombs" id="n-bombs">
+                    </div>
+                    
+                    <!-- Button Aplicar -->
+                    <button id="button-aplicar">Aplicar</button>  
+            </div>
         </div>
-        
     </body>
 </html>

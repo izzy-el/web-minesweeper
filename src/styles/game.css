@@ -1,7 +1,10 @@
 body {
+    /*background-color: #104A5E;*/
+    
     background: linear-gradient(-45deg, #2c1957, #d93ce7, #23a6d5, #23d5ab);
 	background-size: 400% 400%;
 	animation: gradient 60s ease infinite;
+    
 }
 
 #game-page {
@@ -151,12 +154,17 @@ body {
 }
 
 .history-record {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     height: 40px;
     width: 70vw;
     margin: auto;
     border-radius: 5px;
-    background-color: #0ae678;
-    margin-bottom: 10px 
+    background-color: #1f9442;
+    margin-bottom: 10px;
+    color: rgb(231, 231, 231);
 }
 
 button:hover{

@@ -4,18 +4,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(20,113,163);
-    background: linear-gradient(42069deg, rgba(20,113,163,1) 0%, rgba(221,49,49,1) 100%);
+    background: rgb(20, 113, 163);
+    background: linear-gradient(
+        42069deg,
+        rgba(20, 113, 163, 1) 0%,
+        rgba(221, 49, 49, 1) 100%
+    );
 }
 
 #signup {
     width: 500px;
     height: 650px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;    
+    justify-content: center;
     align-items: center;
     gap: 30px;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.788);
@@ -50,7 +54,7 @@
     height: 40px;
     margin-bottom: 10px;
     border: none;
-    border-bottom: 1px solid black; 
+    border-bottom: 1px solid black;
     outline: none;
     font-size: small;
 }
@@ -79,12 +83,12 @@ button {
     vertical-align: center;
 }
 
-button:hover{
+button:hover {
     filter: brightness(120%);
     transition: 1s;
 }
 
-a:hover{
+a:hover {
     filter: brightness(120%);
     transition: 1s;
 }

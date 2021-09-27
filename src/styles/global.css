@@ -48,18 +48,15 @@ table, th, td {
     font-family: "Poppins", sans-serif;
 }
 
-/* width */
 ::-webkit-scrollbar {
     width: 12px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: orange;
     border-radius: 10px;

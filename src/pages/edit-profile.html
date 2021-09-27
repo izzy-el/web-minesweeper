@@ -12,14 +12,14 @@
             href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
             rel="stylesheet"
         />
-        <title>Mineles - Editar perfil</title>
+        <title>Editar perfil - Mineles</title>
     </head>
     <body>
-        <!-- edit Page -->
+        <!-- Edit Page -->
         <div id="edit-page">
-            <!-- edit -->
+            <!-- Edit -->
             <div id="edit">
-                <!-- edit header -->
+                <!-- Edit header -->
                 <header id="edit-header">
                     <a class="go-back" href="game.html">
                         <img src="../assets/back.png" alt="go-back-arrow">
@@ -54,7 +54,8 @@
                     <input
                         type="text"
                         onfocus="(this.type='date')"
-                        placeholder="10/12/1955"
+                        placeholder="Data de nascimento"
+                        value="10/12/2000"
                         name="birthday"
                         id="birthday"
                         class="field"
@@ -63,7 +64,8 @@
                     <!-- CPF -->
                     <input
                         type="text"
-                        placeholder="513.294.098-19"
+                        placeholder="CPF"
+                        value="513.294.098-19"
                         name="cpf"
                         id="cpf"
                         class="field"
@@ -91,7 +93,8 @@
                     <!-- Nome de usuário -->
                     <input
                         type="text"
-                        placeholder="onlyuiz"
+                        placeholder="Nome de Usuário"
+                        value="onlyuiz"
                         name="user"
                         id="user"
                         class="field"
@@ -105,31 +108,49 @@
                         id="actual-password"
                         class="field"
                     />
-                    <!-- Nova senha -->
-                    <input
-                        type="password"
-                        placeholder="Nova Senha"
-                        name="new-password"
-                        id="new-password"
-                        class="field"
-                    />
-                    <!-- Confirmação senha -->
-                    <input
-                        type="password"
-                        placeholder="Confirmar Nova Senha"
-                        name="confirmation-pass"
-                        id="confirmation-pass"
-                        class="field"
-                    />
                 </div>
 
                 <!-- Buttons -->
                 <div id="edit-actions">
-                    <!-- <button type="submit" id="edit-button">Cadastrar</button> -->
                     <a href="../pages/game.html" id="edit-button">
                         Salvar
                     </a>
+                    <a href="#popup-change-pass" id="change-pass-button">
+                        Alterar Senha
+                    </a>
                 </div>
+
+                <!-- Popup Alterar senha -->
+                <div id="popup-change-pass" class="popup-no-click">
+                    <div class="popup">
+                        <!-- Close -->
+                        <a class="close" href="#">&times;</a>
+
+                        <!-- Nova senha -->
+                        <input
+                            type="password"
+                            placeholder="Nova Senha"
+                            name="new-password"
+                            id="new-password"
+                            class="popup-field"
+                        />
+                        <!-- Confirmação senha -->
+                        <input
+                            type="password"
+                            placeholder="Confirmar Nova Senha"
+                            name="confirmation-pass"
+                            id="confirmation-pass"
+                            class="popup-field"
+                        />
+
+                        <!-- Button Alterar senha -->
+                        <a href="#">
+                            <button id="button-change">Alterar senha</button>
+                        </a>
+                        
+                    </div>
+                </div>
+
             </div>
         </div>
     </body>

@@ -148,7 +148,7 @@ body {
     align-items: center;
 }
 
-#scrollable-history{
+#scrollable-history {
     height: 20vh;
     overflow-y: scroll;
 }
@@ -167,6 +167,21 @@ body {
     color: rgb(231, 231, 231);
 }
 
+
+.history-record p {
+    width: 8vw;
+    text-align: center;
+}
+
+.history-record p:first-child {
+    width: 20vw;
+    text-align: center;
+}
+
+.history-record p:nth-last-child(2) {
+    width: 14vw;
+    text-align: center;
+}
 button:hover{
     filter: brightness(120%);
     transition: 1s;
@@ -289,15 +304,6 @@ ul:focus {
 
 .popup .close:hover {
     color: red;
-}
-
-@media screen and (max-width: 700px){
-    .box {
-        width: 70%;
-    }
-    .popup {
-        width: 70%;
-    }
 }
 
 #button-aplicar {

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/global.css" />
+        <link rel="stylesheet" href="../styles/signup.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
+            rel="stylesheet"
+        />
+        <title>Cadastro - Mineles</title>
+    </head>
+    <body>
+        <!-- Signup Page -->
+        <div id="signup-page">
+            <!-- Signup -->
+            <div id="signup">
+                <!-- Signup header -->
+                <header id="signup-header">
+                    <img
+                        src="../assets/ft-logo.png"
+                        alt="ft-logo"
+                        id="ft-logo"
+                        class="header-logo"
+                    />
+                    <h1>Cadastro</h1>
+                    <img
+                        src="../assets/unicamp-logo.png"
+                        alt="unicamp-logo"
+                        id="unicamp-logo"
+                        class="header-logo"
+                    />
+                </header>
+
+                <!-- Inputs -->
+                <div id="signup-fields">
+                    <!-- Nome Completo -->
+                    <input
+                        type="text"
+                        placeholder="Nome Completo"
+                        name="name"
+                        id="name"
+                        class="field"
+                    />
+                    <!-- Data de nascimento -->
+                    <input
+                        type="text"
+                        onfocus="(this.type='date')"
+                        placeholder="Data de Nascimento"
+                        name="birthday"
+                        id="birthday"
+                        class="field"
+                    />
+                    <!-- CPF -->
+                    <input
+                        type="text"
+                        placeholder="CPF"
+                        name="cpf"
+                        id="cpf"
+                        class="field"
+                    />
+                    <!-- Telefone -->
+                    <input
+                        type="text"
+                        placeholder="Telefone"
+                        name="phone"
+                        id="phone"
+                        class="field"
+                        data-mask="(00) 0000-0000"
+                    />
+                    <!-- E-mail -->
+                    <input
+                        type="text"
+                        placeholder="E-mail"
+                        name="email"
+                        id="email"
+                        class="field"
+                    />
+                    <!-- Nome de usuário -->
+                    <input
+                        type="text"
+                        placeholder="Nome de Usuário"
+                        name="user"
+                        id="user"
+                        class="field"
+                    />
+                    <!-- Senha -->
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        name="pass"
+                        id="pass"
+                        class="field"
+                    />
+                    <!-- Confirmação senha -->
+                    <input
+                        type="password"
+                        placeholder="Confirmação Senha"
+                        name="confirmation-pass"
+                        id="confirmation-pass"
+                        class="field"
+                    />
+                </div>
+
+                <!-- Buttons -->
+                <div id="signup-actions">
+                    <!-- <button type="submit" id="signup-button">Cadastrar</button> -->
+                    <a href="../pages/game.html" id="signup-button">
+                        Cadastrar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

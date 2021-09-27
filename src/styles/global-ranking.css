@@ -1,0 +1,39 @@
+* {
+    color: rgb(230, 230, 230);
+    background-color: #104A5E;
+}
+
+.ranking-header {
+    height: 15vh;
+    max-width: 100vw;
+    margin-top: 7vh;
+}
+
+.ranking-header h1{
+    text-align: center;
+}
+
+table {
+    height: 70vh;
+    width: 60vw;
+    margin-left: 20vw;
+    text-align: center;
+    justify-content: center;
+    box-shadow: 0 1em 1em rgba(0, 0, 0, 0.363);
+}
+
+th, td {
+    padding: 0 30px;
+    /* background-color: rgb(65, 65, 65); */
+    background-color: #0D1117;
+}
+
+th {
+    font-weight: bold;
+    background-color: darkorange;
+}
+
+table, th, td {
+    border-radius: 4px;
+}
+

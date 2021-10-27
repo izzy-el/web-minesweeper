@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../styles/global.css" />
         <link rel="stylesheet" href="../styles/game.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <script src="../scripts/script.js" defer></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
             rel="stylesheet"
         />
         <title>Jogo - Mineles</title>
-        <script src="../script.js"></script>
     </head>
     <body>
         <!-- Game Page -->
@@ -85,11 +84,9 @@
 
             <!-- Game -->
             <div id="game-space">
-                <img
-                    src="../assets/tmp-minesweeper-black.png"
-                    alt="minesweeper"
-                    id="game"
-                />
+                <div id="game">
+
+                </div>
             </div>
 
             <div id="game-history">
@@ -155,60 +152,19 @@
                     <!-- Close -->
                     <a class="close" href="#">&times;</a>
 
-                    <datalist id="tickmarks-size">
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                        <option value="6"></option>
-                        <option value="7"></option>
-                        <option value="8"></option>
-                        <option value="9"></option>
-                        <option value="10"></option>
-                        <option value="11"></option>
-                        <option value="12"></option>
-                        <option value="13"></option>
-                        <option value="14"></option>
-                        <option value="15"></option>
-                        <option value="16"></option>
-                        <option value="17"></option>
-                        <option value="18"></option>
-                        <option value="19"></option>
-                        <option value="20"></option>
-                    </datalist>
-
-                    <datalist id="tickmarks-bombs">
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                        <option value="6"></option>
-                        <option value="7"></option>
-                        <option value="8"></option>
-                        <option value="9"></option>
-                        <option value="10"></option>
-                        <option value="11"></option>
-                        <option value="12"></option>
-                        <option value="13"></option>
-                        <option value="14"></option>
-                        <option value="15"></option>
-                        <option value="16"></option>
-                        <option value="17"></option>
-                        <option value="18"></option>
-                        <option value="19"></option>
-                        <option value="20"></option>
-                    </datalist>
-
                     <!-- Tamanho -->
                     <div class="slider">
                         <p>Tamanho:</p>
                         <input
                             type="range"
-                            list="tickmarks-size"
+                            class="range"
                             min="3"
                             max="20"
                             step="1"
                             name="grid-size"
                             id="grid-size"
                         />
+                        <output class="bubble"></output>
                     </div>
 
                     <!-- Numero de bombas -->
@@ -216,18 +172,19 @@
                         <p>Bombas:</p>
                         <input
                             type="range"
-                            list="tickmarks-bombs"
+                            class="range"
                             min="3"
                             max="20"
                             step="1"
                             name="n-bombs"
                             id="n-bombs"
                         />
+                        <output class="bubble"></output>
                     </div>
 
                     <!-- Button Aplicar -->
                     <a href="#">
-                        <button id="button-aplicar">Aplicar</button>
+                        <button id="button-aplicar" onclick="applySettings()">Aplicar</button>
                     </a>
                 </div>
             </div>

@@ -3,7 +3,51 @@ const game = document.getElementById('game');
 let board = [];
 let bombs = [];
 let tableDim = 0;
+let minute = 0;
+let second = 0;
+let cron;
+let cron_started = 0;
 lost = false;
+
+// Função que realiza a mudanda no texto do cronometro
+function timer() {
+    second++;
+
+    if (second == 60) {
+      second = 0;
+      minute++;
+    }
+
+    if (minute == 60) {
+      minute = 0;
+    }
+
+    document.getElementById('minute').innerText = returnData(minute);
+    document.getElementById('second').innerText = returnData(second);
+}
+  
+function returnData(input) {
+    return input >= 10 ? input : `0${input}`
+}
+
+// Função para iniciar o cronometro
+function startTimer() {
+    pauseTimer();
+    cron = setInterval(() => { timer(); }, 1000);
+}
+  
+// Função para pausar o cronometro
+function pauseTimer() {
+    clearInterval(cron);
+}
+  
+// Função para reiniciar o cronometro
+function resetTimer() {
+    minute = 0;
+    second = 0;
+    document.getElementById('minute').innerText = '00';
+    document.getElementById('second').innerText = '00';
+}
 
 // Função para definir o campo
 function startBoard(dimensions, nBombs) {
@@ -41,7 +85,12 @@ function startBoard(dimensions, nBombs) {
 }
 
 // Clique em uma celula
-function cellClick(i, j) {    
+function cellClick(i, j) {
+    if (cron_started == 0) {
+        cron_started = 1;
+        startTimer();
+    }
+    
     const clickedCell = document.getElementById(i + "-" + j);
 
     // Se a célula ainda nao está aberta ou usuário nao perdeu
@@ -73,6 +122,11 @@ function cellClick(i, j) {
 
 // Define o jogo como perdido
 function loss() {
+    if (cron_started) {
+        cron_started = 0;
+        pauseTimer();
+    }
+
     lost = true;
     const allCells = document.getElementsByClassName('cursorControl');
     for (let i = 0; i < allCells.length; i++){

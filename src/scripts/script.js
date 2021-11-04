@@ -9,6 +9,7 @@ let cron;
 let cron_started = 0;
 lost = false;
 
+
 // Função que realiza a mudanda no texto do cronometro
 function timer() {
     second++;
@@ -49,6 +50,7 @@ function resetTimer() {
     document.getElementById('second').innerText = '00';
 }
 
+
 // Função para definir o campo
 function startBoard(dimensions, nBombs) {
     // Define o tamanho do tabuleiro e começa
@@ -84,6 +86,7 @@ function startBoard(dimensions, nBombs) {
     }
 }
 
+
 // Clique em uma celula
 function cellClick(i, j) {
     if (cron_started == 0) {
@@ -97,13 +100,33 @@ function cellClick(i, j) {
     const bg = clickedCell.style.backgroundColor;
     if (bg != "rgb(48, 48, 48)" && lost == false) {
         
-        // Atribui ou número ou bomba para a célula
+        if (openCell(i, j) == 'bomb') {
+            loss()
+        }
+    }
+}
+
+
+// Abre uma célula e atribui uma imagem
+function openCell(i, j) {
+    const cellToOpen = document.getElementById(i + '-' + j);
+
+    // Se a célula ainda nao está aberta
+    const bg = cellToOpen.style.backgroundColor;
+    console.log(bg);
+    if (bg != "rgb(48, 48, 48)") {
+        // Define o fundo para a célula
+        cellToOpen.style['background-color'] = 'rgb(48, 48, 48)';
+
+        // Verifica se é uma bomba
         if (verifyIn(i, j, bombs)) {
-            // Clicou em uma bomba
-            loss();
+            // É uma bomba
+            const bombImg = document.createElement("img");
+            bombImg.setAttribute('src', '../assets/bomb.png')
+            bombImg.setAttribute('class', 'bomb-and-flag');
+            cellToOpen.appendChild(bombImg);
+            return 'bomb';
         } else {
-            // Não clicou em bomba
-            clickedCell.style['background-color'] = 'rgb(48, 48, 48)';
             const number = document.createElement("div");
             let n = bombsArround(i, j);
             if (n != 0) {
@@ -111,14 +134,15 @@ function cellClick(i, j) {
                 number.innerHTML = n;
                 number.style['color'] = getColor(n);
                 number.setAttribute('class', 'number cursorControl');
-                clickedCell.appendChild(number);
+                cellToOpen.appendChild(number);
+                return 'number';
             } else {
-                // Clicou em um espaço em branco
+                return 'empty';
             }
         }
-
     }
 }
+
 
 // Define o jogo como perdido
 function loss() {
@@ -134,16 +158,10 @@ function loss() {
     }
 
     for (let i = 0; i < bombs.length; i++) {
-        const tmpCell = document.getElementById(bombs[i][0] + '-' + bombs[i][1]);
-        if (tmpCell.style.backgroundColor != 'rgb(48, 48, 48)'){
-            const bombImg = document.createElement("img");
-            bombImg.setAttribute('src', '../assets/bomb.png')
-            bombImg.setAttribute('class', 'bomb-and-flag');
-            tmpCell.style['background-color'] = 'rgb(48, 48, 48)';
-            tmpCell.appendChild(bombImg);
-        }
+        openCell(bombs[i][0], bombs[i][1])
     }
 }
+
 
 // Verifica o número de bombas ao redor da célula
 function bombsArround(i, j) {
@@ -154,17 +172,13 @@ function bombsArround(i, j) {
             if (verifyIn(i + verifyList[x][0], j + verifyList[x][1], bombs)) {
                 bombsCount += 1;
             }
-            // else {
-            //     if (bombsArround(i + verifyList[x][0], j + verifyList[x][1]) == 0) {
-            //         cellClick(i + verifyList[x][0], j + verifyList[x][1]);
-            //     }
-            // }
         } catch {
             null;
         }
     }
     return bombsCount;
 }
+
 
 // Retorna a cor do número
 function getColor(n) {
@@ -188,6 +202,7 @@ function getColor(n) {
     }
 }
 
+
 // Verifica se uma cordenada está em uma lista
 function verifyIn(x, y, list) {
     for (let i = 0; i < list.length; i++) {
@@ -197,6 +212,7 @@ function verifyIn(x, y, list) {
     }
     return false;
 }
+
 
 // Atualiza o slider de configurações
 function updateSlider() {
@@ -211,6 +227,7 @@ function applySettings() {
     const nBombs = document.getElementById('n-bombs').value;
     //startBoard(dimension, nBombs);
 }
+
 
 // Executada quanto iniciado
 document.addEventListener('DOMContentLoaded', () => {

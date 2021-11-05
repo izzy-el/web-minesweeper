@@ -165,8 +165,9 @@
                             step="1"
                             name="grid-size"
                             id="grid-size"
+                            onchange="updateSlider()"
                         />
-                        <output class="bubble"></output>
+                        <output class="bubble" id="size-bubble"></output>
                     </div>
 
                     <!-- Numero de bombas -->
@@ -181,7 +182,7 @@
                             name="n-bombs"
                             id="n-bombs"
                         />
-                        <output class="bubble"></output>
+                        <output class="bubble" id="bomb-bubble"></output>
                     </div>
 
                     <!-- Button Aplicar -->
@@ -190,6 +191,27 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Popup Win/Loss -->
+            <div id="popup-wl" class="popup-no-click">
+                <div class="popup">
+                    <!-- Close -->
+                    <a class="close" href="#">&times;</a>
+                    
+                    <!-- Text Win/Loss -->
+                    <p id="text-wl"></p>
+
+                    <!-- Button -->
+                    <!-- <a href="#">
+                        <button id="button-reiniciar" >Reiniciar</button>
+                    </a> -->
+
+                    <!-- Gif -->
+                    <img src="../assets/win.gif" alt="win-gif" class="wl-gif" id="win-gif">
+                    <img src="../assets/loss.gif" alt="loss-gif" class="wl-gif" id="loss-gif">
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

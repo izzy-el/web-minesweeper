@@ -1,6 +1,5 @@
 // Variáveis de controle
 const game = document.getElementById("game");
-let board = [];
 let bombs = [];
 let tableDim = 0;
 let minute = 0;
@@ -60,6 +59,10 @@ function startBoard(dimensions, nBombs) {
 	// Define o tamanho do tabuleiro e começa
 	tableDim = dimensions;
 	lost = false;
+	bombs = [];
+	cron_started = 0;
+	resetTimer();
+	pauseTimer();
 
 	// Define o tamanho individual de cada célula
 	let size = (56 / dimensions / 100) * window.innerHeight - 2;
@@ -94,13 +97,12 @@ function startBoard(dimensions, nBombs) {
 			cell.style["width"] = `${size}px`;
 
 			game.appendChild(cell);
-			board.push(cell);
 		}
 	}
 }
 
 // Clique em uma celula
-function cellClick(i, j) {
+async function cellClick(i, j) {
 	if (cron_started == 0) {
 		cron_started = 1;
 		startTimer();
@@ -117,7 +119,7 @@ function cellClick(i, j) {
 				loss();
 			}
 
-			if (cell == 'empty') {
+			if (cell == "empty") {
 				cellClick(i + 1, j);
 				cellClick(i + 1, j + 1);
 				cellClick(i + 1, j - 1);
@@ -129,9 +131,35 @@ function cellClick(i, j) {
 				cellClick(i, j + 1);
 				cellClick(i, j - 1);
 			}
+
+			if (verifyWin()) {
+				pauseTimer();
+				await new Promise((r) => setTimeout(r, 300));
+				document.getElementById("win-gif").style["display"] = "block";
+				document.getElementById("loss-gif").style["display"] = "none";
+				window.location.href="#popup-wl"
+			}
+
 		}
 	} catch (error) {
 		
+	}
+}
+
+// Verifica se o usuário ganhou
+function verifyWin() {
+	let closed = 0
+	for (let i = 0; i < tableDim; i++) {
+		for (let j = 0; j < tableDim; j++) {
+			if (document.getElementById(i + "-" + j).style.backgroundColor != "rgb(48, 48, 48)") {
+				closed++;
+			}
+		}
+	}
+	if (closed == bombs.length) {
+		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -175,7 +203,7 @@ function openCell(i, j) {
 }
 
 // Define o jogo como perdido
-function loss() {
+async function loss() {
 	if (cron_started) {
 		cron_started = 0;
 		pauseTimer();
@@ -190,6 +218,11 @@ function loss() {
 	for (let i = 0; i < bombs.length; i++) {
 		openCell(bombs[i][0], bombs[i][1]);
 	}
+
+	await new Promise((r) => setTimeout(r, 300));
+	document.getElementById("win-gif").style["display"] = "none";
+	document.getElementById("loss-gif").style["display"] = "block";
+	window.location.href="#popup-wl"
 }
 
 // Verifica o número de bombas ao redor da célula
@@ -219,24 +252,17 @@ function bombsArround(i, j) {
 
 // Retorna a cor do número
 function getColor(n) {
-	switch (n) {
-		case 1:
-			return "blue";
-		case 2:
-			return "green";
-		case 3:
-			return "red";
-		case 4:
-			return "purple";
-		case 5:
-			return "orange";
-		case 6:
-			return "yellow";
-		case 7:
-			return "pink";
-		default:
-			return "white";
+	let dict = {
+		1: 'blue',
+		2: 'green',
+		3: 'red',
+		4: 'purple',
+		5: 'orange',
+		6: 'yellow',
+		7: 'pink',
+		8: 'white',
 	}
+	return dict[n];
 }
 
 // Verifica se uma cordenada está em uma lista
@@ -340,14 +366,35 @@ async function activateCheat(s) {
 function updateSlider() {
 	const bombSlider = document.getElementById("n-bombs");
 	const gridSlider = document.getElementById("grid-size");
-	bombSlider.setAttribute[("max", gridSlider.value)];
+	let max = Math.round(gridSlider.value*gridSlider.value * 0.3);
+	let value = Math.round(max/2);
+
+	bombSlider.setAttribute("max", max);
+	bombSlider.setAttribute("value", value);
+
+	const bombBubble = document.getElementById('bomb-bubble');
+	bombBubble.innerHTML = value;
 }
 
 // Aplica as configurações
 function applySettings() {
 	const dimension = document.getElementById("grid-size").value;
 	const nBombs = document.getElementById("n-bombs").value;
-	//startBoard(dimension, nBombs);
+	resetBoard(dimension, nBombs);
+}
+
+// Reseta o jogo
+function resetBoard(dimension, nBombs) {
+	let i = 0;
+	try {
+		while (game.hasChildNodes || i == 1000) {
+			game.removeChild(game.lastChild);
+			i++;
+		}
+	} catch (error) {
+
+	}
+	startBoard(dimension, nBombs);
 }
 
 // Executada quanto iniciado

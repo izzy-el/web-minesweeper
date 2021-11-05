@@ -111,21 +111,13 @@ function cellClick(i, j) {
 		// Se a célula ainda nao está aberta ou usuário nao perdeu
 		const bg = clickedCell.style.backgroundColor;
 		if (bg != "rgb(48, 48, 48)" && lost == false) {
-			if (openCell(i, j) == "bomb") {
+			let cell = openCell(i, j)
+			if (cell == "bomb") {
 				pauseTimer();
 				loss();
 			}
 
-			let isNull = 0;
-			try {
-				const number = clickedCell.querySelector(
-					"div.number.cursorControl"
-				).textContent;
-			} catch (error) {
-				isNull = 1;
-			}
-
-			if (isNull) {
+			if (cell == 'empty') {
 				cellClick(i + 1, j);
 				cellClick(i + 1, j + 1);
 				cellClick(i + 1, j - 1);

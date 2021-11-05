@@ -7,7 +7,12 @@ let minute = 0;
 let second = 0;
 let cron;
 let cron_started = 0;
-lost = false;
+let lost = false;
+let usedCheat = false;
+
+
+// Desabilita o clique com o botão direito
+window.addEventListener("contextmenu", e => e.preventDefault());
 
 
 // Função que realiza a mudanda no texto do cronometro
@@ -71,12 +76,13 @@ function startBoard(dimensions, nBombs) {
     for (let i = 0; i < dimensions; i++) {
         for (let j = 0; j < dimensions; j++) {
             // Cria a div das células
-            const cell = document.createElement("div");
+            const cell = document.createElement('div');
 
             // Configura as propriedades
-            cell.setAttribute('id', i + "-" + j);
+            cell.setAttribute('id', i + '-' + j);
             cell.setAttribute('class', 'cell cursorControl');
-            cell.addEventListener("click", () => {cellClick(i, j)}, false)
+            cell.setAttribute('oncontextmenu', 'markAsFlag(this)');
+            cell.addEventListener('click', () => {cellClick(i, j)}, false)
             cell.style['height'] = `${size}px`;
             cell.style['width'] = `${size}px`;
 
@@ -94,11 +100,11 @@ function cellClick(i, j) {
         startTimer();
     }
     
-    const clickedCell = document.getElementById(i + "-" + j);
+    const clickedCell = document.getElementById(i + '-' + j);
 
     // Se a célula ainda nao está aberta ou usuário nao perdeu
     const bg = clickedCell.style.backgroundColor;
-    if (bg != "rgb(48, 48, 48)" && lost == false) {
+    if (bg != 'rgb(48, 48, 48)' && lost == false) {
         
         if (openCell(i, j) == 'bomb') {
             loss()
@@ -113,21 +119,24 @@ function openCell(i, j) {
 
     // Se a célula ainda nao está aberta
     const bg = cellToOpen.style.backgroundColor;
-    console.log(bg);
-    if (bg != "rgb(48, 48, 48)") {
-        // Define o fundo para a célula
-        cellToOpen.style['background-color'] = 'rgb(48, 48, 48)';
+    if (bg != 'rgb(48, 48, 48)') {
+        // Retira a flag se houver
+        if (cellToOpen.hasChildNodes())
+            cellToOpen.removeChild(cellToOpen.lastChild);
 
+        // Define o fundo para a célula e o cursor
+        cellToOpen.style['background-color'] = 'rgb(48, 48, 48)';
+        cellToOpen.style['cursor'] = 'default';
         // Verifica se é uma bomba
         if (verifyIn(i, j, bombs)) {
             // É uma bomba
-            const bombImg = document.createElement("img");
+            const bombImg = document.createElement('img');
             bombImg.setAttribute('src', '../assets/bomb.png')
             bombImg.setAttribute('class', 'bomb-and-flag');
             cellToOpen.appendChild(bombImg);
             return 'bomb';
         } else {
-            const number = document.createElement("div");
+            const number = document.createElement('div');
             let n = bombsArround(i, j);
             if (n != 0) {
                 // Clicou em um número
@@ -154,7 +163,7 @@ function loss() {
     lost = true;
     const allCells = document.getElementsByClassName('cursorControl');
     for (let i = 0; i < allCells.length; i++){
-        allCells[i].style['cursor'] = "default";
+        allCells[i].style['cursor'] = 'default';
     }
 
     for (let i = 0; i < bombs.length; i++) {
@@ -184,21 +193,21 @@ function bombsArround(i, j) {
 function getColor(n) {
     switch(n) {
         case 1:
-            return "blue";
+            return 'blue';
         case 2:
-            return "green";
+            return 'green';
         case 3:
-            return "red";
+            return 'red';
         case 4:
-            return "purple";
+            return 'purple';
         case 5:
-            return "orange";
+            return 'orange';
         case 6:
-            return "yellow";
+            return 'yellow';
         case 7:
-            return "pink";
+            return 'pink';
         default:
-            return "white";
+            return 'white';
     }
 }
 
@@ -211,6 +220,97 @@ function verifyIn(x, y, list) {
         }
     }
     return false;
+}
+
+
+// Marca como Bomba (botão direito)
+function markAsFlag(e) {
+    // Se a célula ja está marcada
+    if (hasFlag(e)) {
+        e.removeChild(e.lastChild);
+    } else {
+        // Caso nao esteja
+        const bg = e.style.backgroundColor;
+        // Se a célula ainda não foi aberta, ainda não possui flag e o jogo ainda nao foi perdido
+        if (bg != 'rgb(48, 48, 48)' && !e.hasChildNodes() && lost == false) {
+            const flagImg = document.createElement('img');
+            flagImg.setAttribute('src', '../assets/flag.png')
+            flagImg.setAttribute('class', 'bomb-and-flag');
+            e.appendChild(flagImg);
+        }
+    }
+}
+
+
+// Verifica se a célula possui flag
+function hasFlag(e) {
+    if (e.hasChildNodes()) {
+        if (e.lastChild.getAttribute('src') == '../assets/flag.png') {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+
+// Botão de Trapaça
+async function activateCheat(s) {
+
+    if (!usedCheat) {
+        usedCheat = true;
+    }
+
+    let prevBoard = [];
+
+    for (let i=0; i<tableDim; i++) {
+        let row = [];
+        for (let j=0; j<tableDim; j++) {
+            // Se a célula estava aberta
+            const tmpCell = document.getElementById(i + '-' + j);
+            if (tmpCell.style.backgroundColor == "rgb(48, 48, 48)") {
+                row.push('open');
+            } else{
+                if (hasFlag(tmpCell)) {
+                    row.push('flag');
+                } else {
+                    row.push('closed');
+                }
+            }
+        }
+        prevBoard.push(row);
+    }
+
+    // Mostra todas as células
+    for (let i=0; i<tableDim; i++) {
+        for (let j=0; j<tableDim; j++) {
+            openCell(i, j);
+        }
+    }
+    // Espera
+    await new Promise(r => setTimeout(r, s*1000));
+    // Restaura o tabuleiro
+    for (let i=0; i<tableDim; i++) {
+        for (let j=0; j<tableDim; j++) {
+            const tmpCell = document.getElementById(i + '-' + j);
+            tmpCell.style['background-color'] = 'rgb(0, 0, 0)';
+            tmpCell.style['cursor'] = 'pointer';
+            try {
+                tmpCell.removeChild(tmpCell.lastChild);
+            } catch {
+                null
+            }
+            if (prevBoard[i][j] == 'open' || prevBoard[i][j] == 'flag') {
+                if (prevBoard[i][j] == 'flag') {
+                    markAsFlag(tmpCell);
+                } else {
+                    openCell(i, j);
+                }
+            }
+        }
+    }
 }
 
 
@@ -238,12 +338,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const allRanges = document.querySelectorAll(".slider");
+const allRanges = document.querySelectorAll('.slider');
     allRanges.forEach(wrap => {
-    const range = wrap.querySelector(".range");
-    const bubble = wrap.querySelector(".bubble");
+    const range = wrap.querySelector('.range');
+    const bubble = wrap.querySelector('.bubble');
 
-    range.addEventListener("input", () => {
+    range.addEventListener('input', () => {
         setBubble(range, bubble);
     });
     setBubble(range, bubble);

@@ -63,6 +63,10 @@ function startBoard(dimensions, nBombs) {
 	cron_started = 0;
 	resetTimer();
 	pauseTimer();
+	document.getElementById("grid-size").setAttribute("value", dimensions);
+	document.getElementById("size-bubble").setAttribute("value", dimensions);
+	document.getElementById("n-bombs").setAttribute("value", nBombs);
+	document.getElementById("bomb-bubble").setAttribute("value", nBombs);
 
 	// Define o tamanho individual de cada célula
 	let size = (56 / dimensions / 100) * window.innerHeight - 2;
@@ -71,9 +75,7 @@ function startBoard(dimensions, nBombs) {
 	while (bombs.length != nBombs) {
 		let bombX = Math.floor(Math.random() * dimensions);
 		let bombY = Math.floor(Math.random() * dimensions);
-		bombs.indexOf([bombY, bombX]) === -1
-			? bombs.push([bombY, bombX])
-			: null;
+		bombs.indexOf([bombY, bombX]) === -1 ? bombs.push([bombY, bombX]) : null;
 	}
 
 	// Cria as células
@@ -113,7 +115,7 @@ async function cellClick(i, j) {
 		// Se a célula ainda nao está aberta ou usuário nao perdeu
 		const bg = clickedCell.style.backgroundColor;
 		if (bg != "rgb(48, 48, 48)" && lost == false) {
-			let cell = openCell(i, j)
+			let cell = openCell(i, j);
 			if (cell == "bomb") {
 				pauseTimer();
 				loss();
@@ -135,20 +137,28 @@ async function cellClick(i, j) {
 			if (verifyWin()) {
 				pauseTimer();
 				await new Promise((r) => setTimeout(r, 300));
-				document.getElementById("win-gif").style["display"] = "block";
-				document.getElementById("loss-gif").style["display"] = "none";
-				window.location.href="#popup-wl"
-			}
 
+				try {
+					const wlGif = document.getElementById("wl-gif");
+					wlGif.setAttribute("src", "../assets/win.gif");
+				} catch (error) {
+					const wlBox = document.getElementById("wl-box");
+					const wlGif = document.createElement("img");
+					wlGif.setAttribute("src", "../assets/win.gif");
+					wlGif.setAttribute("id", "wl-gif");
+					wlBox.appendChild(wlGif);
+				}
+
+				document.getElementById("text-wl").innerHTML = "Você ganhou =)";
+				window.location.href = "#popup-wl";
+			}
 		}
-	} catch (error) {
-		
-	}
+	} catch (error) {}
 }
 
 // Verifica se o usuário ganhou
 function verifyWin() {
-	let closed = 0
+	let closed = 0;
 	for (let i = 0; i < tableDim; i++) {
 		for (let j = 0; j < tableDim; j++) {
 			if (document.getElementById(i + "-" + j).style.backgroundColor != "rgb(48, 48, 48)") {
@@ -171,8 +181,7 @@ function openCell(i, j) {
 	const bg = cellToOpen.style.backgroundColor;
 	if (bg != "rgb(48, 48, 48)") {
 		// Retira a flag se houver
-		if (cellToOpen.hasChildNodes())
-			cellToOpen.removeChild(cellToOpen.lastChild);
+		if (cellToOpen.hasChildNodes()) cellToOpen.removeChild(cellToOpen.lastChild);
 
 		// Define o fundo para a célula e o cursor
 		cellToOpen.style["background-color"] = "rgb(48, 48, 48)";
@@ -219,10 +228,21 @@ async function loss() {
 		openCell(bombs[i][0], bombs[i][1]);
 	}
 
+
 	await new Promise((r) => setTimeout(r, 300));
-	document.getElementById("win-gif").style["display"] = "none";
-	document.getElementById("loss-gif").style["display"] = "block";
-	window.location.href="#popup-wl"
+	try {
+		const wlGif = document.getElementById("wl-gif");
+		wlGif.setAttribute("src", "../assets/loss.gif");
+	} catch (error) {
+		const wlBox = document.getElementById("wl-box");
+		const wlGif = document.createElement("img");
+		wlGif.setAttribute("src", "../assets/loss.gif");
+		wlGif.setAttribute("id", "wl-gif");
+		wlBox.appendChild(wlGif);
+	}
+
+	document.getElementById("text-wl").innerHTML = "Você perdeu =(";
+	window.location.href = "#popup-wl";
 }
 
 // Verifica o número de bombas ao redor da célula
@@ -253,15 +273,15 @@ function bombsArround(i, j) {
 // Retorna a cor do número
 function getColor(n) {
 	let dict = {
-		1: 'blue',
-		2: 'green',
-		3: 'red',
-		4: 'purple',
-		5: 'orange',
-		6: 'yellow',
-		7: 'pink',
-		8: 'white',
-	}
+		1: "blue",
+		2: "green",
+		3: "red",
+		4: "purple",
+		5: "orange",
+		6: "yellow",
+		7: "pink",
+		8: "white",
+	};
 	return dict[n];
 }
 
@@ -362,18 +382,28 @@ async function activateCheat(s) {
 	}
 }
 
+// Atualiza os valores dos sliders de acordo com a posição de inicio
+function updateSliderValues() {
+	const bombSlider = document.getElementById("n-bombs");
+	const gridSlider = document.getElementById("grid-size");
+	bombSlider.setAttribute("value", bombs.length);
+	gridSlider.setAttribute("value", tableDim);
+}
+
 // Atualiza o slider de configurações
 function updateSlider() {
 	const bombSlider = document.getElementById("n-bombs");
 	const gridSlider = document.getElementById("grid-size");
-	let max = Math.round(gridSlider.value*gridSlider.value * 0.3);
-	let value = Math.round(max/2);
+	let max = Math.round(gridSlider.value * gridSlider.value * 0.3);
+
+	let prevValue = bombSlider.value;
+	if (prevValue > max) {
+		bombSlider.setAttribute("value", max);
+		const bombBubble = document.getElementById("bomb-bubble");
+		bombBubble.innerHTML = max;
+	}
 
 	bombSlider.setAttribute("max", max);
-	bombSlider.setAttribute("value", value);
-
-	const bombBubble = document.getElementById('bomb-bubble');
-	bombBubble.innerHTML = value;
 }
 
 // Aplica as configurações
@@ -391,19 +421,17 @@ function resetBoard(dimension, nBombs) {
 			game.removeChild(game.lastChild);
 			i++;
 		}
-	} catch (error) {
-
-	}
+	} catch (error) {}
 	startBoard(dimension, nBombs);
 }
 
-// Executada quanto iniciado
-document.addEventListener("DOMContentLoaded", () => {
-	let startDimension = 6;
-	let startBombsNumber = 5;
-	startBoard(startDimension, startBombsNumber);
-});
+// Reseta o campo depois do final
+function finalReset() {
+	resetBoard(document.getElementById("grid-size").value, bombs.length);
+	window.location.href = "#";
+}
 
+// Mostra o valor dos sliders
 const allRanges = document.querySelectorAll(".slider");
 allRanges.forEach((wrap) => {
 	const range = wrap.querySelector(".range");
@@ -417,11 +445,12 @@ allRanges.forEach((wrap) => {
 
 function setBubble(range, bubble) {
 	const val = range.value;
-	const min = range.min ? range.min : 0;
-	const max = range.max ? range.max : 100;
-	const newVal = Number(((val - min) * 100) / (max - min));
 	bubble.innerHTML = val;
-
-	// Sorta magic numbers based on size of the native UI thumb
-	bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
 }
+
+// Executada quanto iniciado
+document.addEventListener("DOMContentLoaded", () => {
+	let startDimension = 6;
+	let startBombsNumber = 5;
+	startBoard(startDimension, startBombsNumber);
+});

@@ -57,8 +57,21 @@
 
                 <div>
                     <div class="menu-item">
+                        <!-- Reset button -->
+                        <div class="right-menu">
+                            <input type="image"
+                                src="../assets/reset.png"
+                                alt="reset"
+                                id="reset-button"
+                                class="top-button"
+                                onclick="finalReset()"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
                         <!-- Cheat button -->
-                        <div id="right-menu">
+                        <div class="right-menu">
                             <input type="image"
                                 src="../assets/cheat.png"
                                 alt="cheat"
@@ -166,8 +179,9 @@
                             name="grid-size"
                             id="grid-size"
                             onchange="updateSlider()"
+                            onload="updateSliderValues()"
                         />
-                        <output class="bubble" id="size-bubble"></output>
+                        <p class="bubble" id="size-bubble"></p>
                     </div>
 
                     <!-- Numero de bombas -->
@@ -181,8 +195,9 @@
                             step="1"
                             name="n-bombs"
                             id="n-bombs"
+                            onload="updateSliderValues()"
                         />
-                        <output class="bubble" id="bomb-bubble"></output>
+                        <p class="bubble" id="bomb-bubble"></p>
                     </div>
 
                     <!-- Button Aplicar -->
@@ -194,21 +209,12 @@
 
             <!-- Popup Win/Loss -->
             <div id="popup-wl" class="popup-no-click">
-                <div class="popup">
-                    <!-- Close -->
-                    <a class="close" href="#">&times;</a>
-                    
+                <div class="popup-end" id="wl-box">
                     <!-- Text Win/Loss -->
                     <p id="text-wl"></p>
 
                     <!-- Button -->
-                    <!-- <a href="#">
-                        <button id="button-reiniciar" >Reiniciar</button>
-                    </a> -->
-
-                    <!-- Gif -->
-                    <img src="../assets/win.gif" alt="win-gif" class="wl-gif" id="win-gif">
-                    <img src="../assets/loss.gif" alt="loss-gif" class="wl-gif" id="loss-gif">
+                    <button id="button-reiniciar" onclick="finalReset()">Reiniciar</button>
                 </div>
             </div>
 

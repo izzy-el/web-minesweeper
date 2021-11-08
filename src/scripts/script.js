@@ -18,20 +18,18 @@ window.addEventListener("contextmenu", (e) => e.preventDefault());
 
 // Função que realiza a mudança no texto do cronometro
 function timer() {
-    if(!rivotril) {
-        second++;
-    
-        if (second == 60) {
-            second = 0;
-            minute++;
-        }
-    
-        if (minute == 60) {
-            minute = 0;
-        }
-    }
+	if (!rivotril) {
+		second++;
 
-    else {
+		if (second == 60) {
+			second = 0;
+			minute++;
+		}
+
+		if (minute == 60) {
+			minute = 0;
+		}
+	} else {
 		if (!notFlag) {
 			// Minuto inicial para o modo Rivotril
 			let tmpSecond = (timerRivotril() - Math.floor(timerRivotril())) * 60;
@@ -40,15 +38,14 @@ function timer() {
 			second++;
 			notFlag = 1;
 		}
-		
+
 		second--;
-		
-        if (second < 0) {
+
+		if (second < 0) {
 			second = 59;
-            minute--;
-        }
-    
-    }
+			minute--;
+		}
+	}
 	updateTimer();
 
 	if (rivotril && minute == 0 && second == 0) {
@@ -89,7 +86,7 @@ function resetTimer() {
 
 // Retorna o tempo para o modo rivotril
 function timerRivotril() {
-	return tableDim/2;
+	return tableDim / 2;
 }
 
 // Função para definir o campo
@@ -99,7 +96,7 @@ function startBoard(dimensions, nBombs) {
 	lost = false;
 	bombs = [];
 	cron_started = 0;
-    openedCells = 0;
+	openedCells = 0;
 	resetTimer();
 	pauseTimer();
 	document.getElementById("grid-size").setAttribute("value", dimensions);
@@ -182,7 +179,6 @@ async function cellClick(i, j) {
 				try {
 					const wlGif = document.getElementById("wl-gif");
 					wlGif.setAttribute("src", "../assets/win.gif");
-                    
 				} catch (error) {
 					const wlBox = document.getElementById("wl-box");
 					const wlGif = document.createElement("img");
@@ -192,9 +188,9 @@ async function cellClick(i, j) {
 				}
 
 				document.getElementById("text-wl").innerHTML = "Você ganhou =)";
-                document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) +  " : " + returnData(second)}`;
-                document.getElementById("pontuacao-wl").innerHTML = `Pontuação: ${getPoints()}`;
-                document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
+				document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) + ":" + returnData(second)}`;
+				document.getElementById("pontuacao-wl").innerHTML = `Pontuação: ${getPoints()}`;
+				document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
 				window.location.href = "#popup-wl";
 			}
 		}
@@ -231,14 +227,14 @@ function openCell(i, j) {
 				number.style["color"] = getColor(n);
 				number.setAttribute("class", "number cursorControl");
 				cellToOpen.appendChild(number);
-                if (!activeCheat){
-                    openedCells++;
-                }
+				if (!activeCheat) {
+					openedCells++;
+				}
 				return "number";
 			} else {
-                if (!activeCheat){
-                    openedCells++;
-                }
+				if (!activeCheat) {
+					openedCells++;
+				}
 				return "empty";
 			}
 		}
@@ -293,7 +289,7 @@ async function activateCheat(s) {
 	if (!usedCheat) {
 		usedCheat = true;
 	}
-    activeCheat = true;
+	activeCheat = true;
 
 	let prevBoard = [];
 
@@ -342,8 +338,9 @@ async function activateCheat(s) {
 				}
 			}
 		}
-    activeCheat = false;
-}}
+		activeCheat = false;
+	}
+}
 
 // Marca como Bomba (botão direito)
 function markAsFlag(e) {
@@ -378,11 +375,11 @@ function hasFlag(e) {
 
 // Determina a pontuação
 function getPoints() {
-	let score = (tableDim * tableDim) * bombs.length;
+	let score = tableDim * tableDim * bombs.length;
 	if (rivotril) {
-		score *= 1.5
+		score *= 1.5;
 	}
-	return score
+	return score;
 }
 
 // Muda o modo
@@ -391,7 +388,7 @@ function changeMode(mode) {
 
 	const buttonNormal = document.getElementById("normal-button");
 	const buttonRivotril = document.getElementById("rivotril-button");
-	switch(mode) {
+	switch (mode) {
 		case "normal":
 			rivotril = false;
 			buttonNormal.style["color"] = "red";
@@ -440,7 +437,6 @@ async function loss() {
 		openCell(bombs[i][0], bombs[i][1]);
 	}
 
-
 	await new Promise((r) => setTimeout(r, 300));
 	try {
 		const wlGif = document.getElementById("wl-gif");
@@ -454,10 +450,10 @@ async function loss() {
 	}
 
 	document.getElementById("text-wl").innerHTML = "Você perdeu =(";
-    document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) +  " : " + returnData(second)}`;
-    document.getElementById("pontuacao-wl").innerHTML = "Pontuação: 0";
-    document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
-	
+	document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) + " : " + returnData(second)}`;
+	document.getElementById("pontuacao-wl").innerHTML = "Pontuação: 0";
+	document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
+
 	if (rivotril) {
 		let tempoInicial = timerRivotril() * 60;
 		let tempoPassado = minute * 60 + second;
@@ -465,9 +461,9 @@ async function loss() {
 		// Tempo passado em segundos
 		let tmpTempo = tempoInicial - tempoPassado;
 
-		let minutosPassados = Math.floor(tmpTempo/60);
-		let segundosPassados = tmpTempo - minutosPassados*60;
-		document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minutosPassados) +  ":" + returnData(segundosPassados)}`;
+		let minutosPassados = Math.floor(tmpTempo / 60);
+		let segundosPassados = tmpTempo - minutosPassados * 60;
+		document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minutosPassados) + ":" + returnData(segundosPassados)}`;
 	}
 
 	window.location.href = "#popup-wl";
@@ -501,8 +497,8 @@ function updateSlider() {
 function applySettings() {
 	const dimension = document.getElementById("grid-size").value;
 	const nBombs = document.getElementById("n-bombs").value;
-	updateTimer();
 	resetBoard(dimension, nBombs);
+	timer();
 }
 
 // Mostra o valor dos sliders
@@ -552,4 +548,4 @@ document.addEventListener("DOMContentLoaded", () => {
 	let startDimension = 6;
 	let startBombsNumber = 5;
 	startBoard(startDimension, startBombsNumber);
-})
+});

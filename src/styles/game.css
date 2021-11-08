@@ -4,6 +4,23 @@ body {
 	animation: gradient 60s ease infinite;
 }
 
+ul {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+li {
+	color: #fff;
+	background: #0d1117;
+	display: block;
+	float: left;
+	padding: 1rem;
+	position: relative;
+	text-decoration: none;
+	transition-duration: 0.5s;
+}
+
 .top-button {
 	width: 4vh;
 	height: 4vh;
@@ -157,6 +174,29 @@ ul:focus {
 	cursor: pointer;
 }
 
+.bomb-and-flag {
+	height: 100%;
+	width: 100%;
+}
+
+.number {
+	font-family: "Poppins", sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.7rem;
+	height: 100%;
+	width: 100%;
+}
+
+.cursorControl {
+	cursor: pointer;
+}
+
+.bubble {
+	text-align: center;
+}
+
 #game-page {
 	height: 100vh;
 	max-width: 100vw !important;
@@ -251,30 +291,6 @@ ul:focus {
 	flex-wrap: wrap;
 }
 
-.bomb-and-flag {
-	height: 100%;
-	width: 100%;
-}
-
-.number {
-	font-family: "Poppins", sans-serif;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.7rem;
-	height: 100%;
-	width: 100%;
-}
-
-.cursorControl {
-	cursor: pointer;
-}
-
-#game div:hover {
-	background-color: rgb(31, 31, 31);
-	transition: 50ms;
-}
-
 #game-history {
 	height: 30vh;
 	width: 80vw;
@@ -345,38 +361,6 @@ ul:focus {
 	color: red;
 }
 
-button:hover {
-	filter: brightness(120%);
-	transition: 1s;
-}
-
-ul {
-	list-style: none;
-	margin: 0;
-	padding-left: 0;
-}
-
-li {
-	color: #fff;
-	background: #0d1117;
-	display: block;
-	float: left;
-	padding: 1rem;
-	position: relative;
-	text-decoration: none;
-	transition-duration: 0.5s;
-}
-
-li:hover,
-li:focus-within {
-	background: #414141;
-	cursor: pointer;
-}
-
-li:focus-within a {
-	outline: none;
-}
-
 #left-item {
 	position: fixed;
 	top: 6vh;
@@ -392,6 +376,26 @@ li:focus-within a {
 	border-radius: 5px;
 }
 
+button:hover {
+	filter: brightness(120%);
+	transition: 1s;
+}
+
+li:hover,
+li:focus-within {
+	background: #414141;
+	cursor: pointer;
+}
+
+li:focus-within a {
+	outline: none;
+}
+
+#game div:hover {
+	background-color: rgb(31, 31, 31);
+	transition: 50ms;
+}
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -402,8 +406,4 @@ li:focus-within a {
 	100% {
 		background-position: 0% 50%;
 	}
-}
-
-.bubble {
-	text-align: center;
 }

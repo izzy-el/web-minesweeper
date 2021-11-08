@@ -499,6 +499,7 @@ function applySettings() {
 	const nBombs = document.getElementById("n-bombs").value;
 	resetBoard(dimension, nBombs);
 	timer();
+	window.location.href = "#";
 }
 
 // Mostra o valor dos sliders

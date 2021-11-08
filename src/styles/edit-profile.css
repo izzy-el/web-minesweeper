@@ -1,180 +1,177 @@
-#edit-page {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #104A5E;
-}
-
-#edit {
-    width: 500px;
-    height: 650px;
-    background: #ffffff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.788);
-}
-
-#edit-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
+button {
+	width: 400px;
+	height: 40px;
+	border: none;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	vertical-align: center;
 }
 
 .header-logo {
-    height: 50px;
-    width: 50px;
-    position: relative;
-    right: 0;
-    top: 0;
-}
-
-#edit-fields {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	height: 50px;
+	width: 50px;
+	position: relative;
+	right: 0;
+	top: 0;
 }
 
 .field {
-    display: flex;
-    margin: auto;
-    width: 400px;
-    height: 40px;
-    margin-bottom: 10px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    font-size: small;
+	display: flex;
+	margin: auto;
+	width: 400px;
+	height: 40px;
+	margin-bottom: 10px;
+	border: none;
+	border-bottom: 1px solid black;
+	outline: none;
+	font-size: small;
 }
 
 .popup-field {
-    display: flex;
-    margin: auto;
-    width: 200px;
-    height: 40px;
-    margin-bottom: 5px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    font-size: small;
-}
-
-#edit-button {
-    background-color: #dd3131;
-    width: 400px;
-    height: 40px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#change-pass-button {
-    background-color: #1471a3;
-    width: 400px;
-    height: 40px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#button-change {
-    width: 150px;
-    height: 50px;
-    border: none;
-    border-radius: 5px;
-    background-color: #1471a3;
-}
-
-
-button {
-    width: 400px;
-    height: 40px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    vertical-align: center;
-}
-
-button:hover {
-    filter: brightness(120%);
-    transition: 1s;
-}
-
-a:hover {
-    filter: brightness(120%);
-    transition: 1s;
-}
-
-#edit-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+	display: flex;
+	margin: auto;
+	width: 200px;
+	height: 40px;
+	margin-bottom: 5px;
+	border: none;
+	border-bottom: 1px solid black;
+	outline: none;
+	font-size: small;
 }
 
 .popup-no-click {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    transition: 100ms;
-    visibility: hidden;
-    opacity: 0;
-
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	transition: 100ms;
+	visibility: hidden;
+	opacity: 0;
 }
 
 .popup-no-click:target {
-    visibility: visible;
-    opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
 
 .popup {
-    margin: 50px auto;
-    margin-top: 70px;
-    padding: 40px;
-    background: #FFFFFF;
-    border-radius: 5px;
-    height: 20vh;
-    width: 30vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
-    gap: 3vh;
+	margin: 50px auto;
+	margin-top: 70px;
+	padding: 40px;
+	background: #ffffff;
+	border-radius: 5px;
+	height: 20vh;
+	width: 30vh;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: column;
+	gap: 3vh;
 }
 
 .popup .close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
+.popup .slider input {
+	width: 250px;
+	color: white;
+}
+
+#edit-page {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #104a5e;
+}
+
+#edit {
+	width: 500px;
+	height: 650px;
+	background: #ffffff;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+	box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.788);
+}
+
+#edit-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 50px;
+}
+
+#edit-fields {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#edit-button {
+	background-color: #dd3131;
+	width: 400px;
+	height: 40px;
+	border: none;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#change-pass-button {
+	background-color: #1471a3;
+	width: 400px;
+	height: 40px;
+	border: none;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#button-change {
+	width: 150px;
+	height: 50px;
+	border: none;
+	border-radius: 5px;
+	background-color: #1471a3;
+}
+
+#edit-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+button:hover {
+	filter: brightness(120%);
+	transition: 1s;
+}
+
+a:hover {
+	filter: brightness(120%);
+	transition: 1s;
 }
 
 .popup .close:hover {
-    color: red;
-}
-
-.popup .slider input{
-    width: 250px;
-    color: white;
+	color: red;
 }

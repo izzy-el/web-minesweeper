@@ -4,27 +4,59 @@ let bombs = [];
 let tableDim = 0;
 let minute = 0;
 let second = 0;
+let notFlag = 0;
 let cron;
 let cron_started = 0;
 let lost = false;
 let usedCheat = false;
+let activeCheat = false;
+let openedCells = 0;
+let rivotril = false;
 
 // Desabilita o clique com o botão direito
 window.addEventListener("contextmenu", (e) => e.preventDefault());
 
-// Função que realiza a mudanda no texto do cronometro
+// Função que realiza a mudança no texto do cronometro
 function timer() {
-	second++;
+    if(!rivotril) {
+        second++;
+    
+        if (second == 60) {
+            second = 0;
+            minute++;
+        }
+    
+        if (minute == 60) {
+            minute = 0;
+        }
+    }
 
-	if (second == 60) {
-		second = 0;
-		minute++;
+    else {
+		if (!notFlag) {
+			// Minuto inicial para o modo Rivotril
+			let tmpSecond = (timerRivotril() - Math.floor(timerRivotril())) * 60;
+			minute = Math.floor(timerRivotril());
+			second = tmpSecond;
+			second++;
+			notFlag = 1;
+		}
+		
+		second--;
+		
+        if (second < 0) {
+			second = 59;
+            minute--;
+        }
+    
+    }
+	updateTimer();
+
+	if (rivotril && minute == 0 && second == 0) {
+		loss();
 	}
+}
 
-	if (minute == 60) {
-		minute = 0;
-	}
-
+function updateTimer() {
 	document.getElementById("minute").innerText = returnData(minute);
 	document.getElementById("second").innerText = returnData(second);
 }
@@ -50,8 +82,14 @@ function pauseTimer() {
 function resetTimer() {
 	minute = 0;
 	second = 0;
+	notFlag = 0;
 	document.getElementById("minute").innerText = "00";
 	document.getElementById("second").innerText = "00";
+}
+
+// Retorna o tempo para o modo rivotril
+function timerRivotril() {
+	return tableDim/2;
 }
 
 // Função para definir o campo
@@ -61,6 +99,7 @@ function startBoard(dimensions, nBombs) {
 	lost = false;
 	bombs = [];
 	cron_started = 0;
+    openedCells = 0;
 	resetTimer();
 	pauseTimer();
 	document.getElementById("grid-size").setAttribute("value", dimensions);
@@ -75,7 +114,9 @@ function startBoard(dimensions, nBombs) {
 	while (bombs.length != nBombs) {
 		let bombX = Math.floor(Math.random() * dimensions);
 		let bombY = Math.floor(Math.random() * dimensions);
-		bombs.indexOf([bombY, bombX]) === -1 ? bombs.push([bombY, bombX]) : null;
+		if (!verifyIn(bombY, bombX, bombs)) {
+			bombs.push([bombY, bombX]);
+		}
 	}
 
 	// Cria as células
@@ -141,6 +182,7 @@ async function cellClick(i, j) {
 				try {
 					const wlGif = document.getElementById("wl-gif");
 					wlGif.setAttribute("src", "../assets/win.gif");
+                    
 				} catch (error) {
 					const wlBox = document.getElementById("wl-box");
 					const wlGif = document.createElement("img");
@@ -150,27 +192,13 @@ async function cellClick(i, j) {
 				}
 
 				document.getElementById("text-wl").innerHTML = "Você ganhou =)";
+                document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) +  " : " + returnData(second)}`;
+                document.getElementById("pontuacao-wl").innerHTML = `Pontuação: ${getPoints()}`;
+                document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
 				window.location.href = "#popup-wl";
 			}
 		}
 	} catch (error) {}
-}
-
-// Verifica se o usuário ganhou
-function verifyWin() {
-	let closed = 0;
-	for (let i = 0; i < tableDim; i++) {
-		for (let j = 0; j < tableDim; j++) {
-			if (document.getElementById(i + "-" + j).style.backgroundColor != "rgb(48, 48, 48)") {
-				closed++;
-			}
-		}
-	}
-	if (closed == bombs.length) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 // Abre uma célula e atribui uma imagem
@@ -203,46 +231,18 @@ function openCell(i, j) {
 				number.style["color"] = getColor(n);
 				number.setAttribute("class", "number cursorControl");
 				cellToOpen.appendChild(number);
+                if (!activeCheat){
+                    openedCells++;
+                }
 				return "number";
 			} else {
+                if (!activeCheat){
+                    openedCells++;
+                }
 				return "empty";
 			}
 		}
 	}
-}
-
-// Define o jogo como perdido
-async function loss() {
-	if (cron_started) {
-		cron_started = 0;
-		pauseTimer();
-	}
-
-	lost = true;
-	const allCells = document.getElementsByClassName("cursorControl");
-	for (let i = 0; i < allCells.length; i++) {
-		allCells[i].style["cursor"] = "default";
-	}
-
-	for (let i = 0; i < bombs.length; i++) {
-		openCell(bombs[i][0], bombs[i][1]);
-	}
-
-
-	await new Promise((r) => setTimeout(r, 300));
-	try {
-		const wlGif = document.getElementById("wl-gif");
-		wlGif.setAttribute("src", "../assets/loss.gif");
-	} catch (error) {
-		const wlBox = document.getElementById("wl-box");
-		const wlGif = document.createElement("img");
-		wlGif.setAttribute("src", "../assets/loss.gif");
-		wlGif.setAttribute("id", "wl-gif");
-		wlBox.appendChild(wlGif);
-	}
-
-	document.getElementById("text-wl").innerHTML = "Você perdeu =(";
-	window.location.href = "#popup-wl";
 }
 
 // Verifica o número de bombas ao redor da célula
@@ -270,60 +270,22 @@ function bombsArround(i, j) {
 	return bombsCount;
 }
 
-// Retorna a cor do número
-function getColor(n) {
-	let dict = {
-		1: "blue",
-		2: "green",
-		3: "red",
-		4: "purple",
-		5: "orange",
-		6: "yellow",
-		7: "pink",
-		8: "white",
-	};
-	return dict[n];
+// Reseta o jogo
+function resetBoard(dimension, nBombs) {
+	let i = 0;
+	try {
+		while (game.hasChildNodes || i == 1000) {
+			game.removeChild(game.lastChild);
+			i++;
+		}
+	} catch (error) {}
+	startBoard(dimension, nBombs);
 }
 
-// Verifica se uma cordenada está em uma lista
-function verifyIn(x, y, list) {
-	for (let i = 0; i < list.length; i++) {
-		if (list[i][0] == x && list[i][1] == y) {
-			return true;
-		}
-	}
-	return false;
-}
-
-// Marca como Bomba (botão direito)
-function markAsFlag(e) {
-	// Se a célula ja está marcada
-	if (hasFlag(e)) {
-		e.removeChild(e.lastChild);
-	} else {
-		// Caso nao esteja
-		const bg = e.style.backgroundColor;
-		// Se a célula ainda não foi aberta, ainda não possui flag e o jogo ainda nao foi perdido
-		if (bg != "rgb(48, 48, 48)" && !e.hasChildNodes() && lost == false) {
-			const flagImg = document.createElement("img");
-			flagImg.setAttribute("src", "../assets/flag.png");
-			flagImg.setAttribute("class", "bomb-and-flag");
-			e.appendChild(flagImg);
-		}
-	}
-}
-
-// Verifica se a célula possui flag
-function hasFlag(e) {
-	if (e.hasChildNodes()) {
-		if (e.lastChild.getAttribute("src") == "../assets/flag.png") {
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+// Reseta o campo depois do final
+function finalReset() {
+	resetBoard(document.getElementById("grid-size").value, bombs.length);
+	window.location.href = "#";
 }
 
 // Botão de Trapaça
@@ -331,6 +293,7 @@ async function activateCheat(s) {
 	if (!usedCheat) {
 		usedCheat = true;
 	}
+    activeCheat = true;
 
 	let prevBoard = [];
 
@@ -379,7 +342,135 @@ async function activateCheat(s) {
 				}
 			}
 		}
+    activeCheat = false;
+}}
+
+// Marca como Bomba (botão direito)
+function markAsFlag(e) {
+	// Se a célula ja está marcada
+	if (hasFlag(e)) {
+		e.removeChild(e.lastChild);
+	} else {
+		// Caso nao esteja
+		const bg = e.style.backgroundColor;
+		// Se a célula ainda não foi aberta, ainda não possui flag e o jogo ainda nao foi perdido
+		if (bg != "rgb(48, 48, 48)" && !e.hasChildNodes() && lost == false) {
+			const flagImg = document.createElement("img");
+			flagImg.setAttribute("src", "../assets/flag.png");
+			flagImg.setAttribute("class", "bomb-and-flag");
+			e.appendChild(flagImg);
+		}
 	}
+}
+
+// Verifica se a célula possui flag
+function hasFlag(e) {
+	if (e.hasChildNodes()) {
+		if (e.lastChild.getAttribute("src") == "../assets/flag.png") {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+// Determina a pontuação
+function getPoints() {
+	let score = (tableDim * tableDim) * bombs.length;
+	if (rivotril) {
+		score *= 1.5
+	}
+	return score
+}
+
+// Muda o modo
+function changeMode(mode) {
+	finalReset();
+
+	const buttonNormal = document.getElementById("normal-button");
+	const buttonRivotril = document.getElementById("rivotril-button");
+	switch(mode) {
+		case "normal":
+			rivotril = false;
+			buttonNormal.style["color"] = "red";
+			buttonRivotril.style["color"] = "black";
+			break;
+		case "rivotril":
+			rivotril = true;
+			buttonNormal.style["color"] = "black";
+			buttonRivotril.style["color"] = "red";
+			timer();
+			break;
+	}
+}
+
+// Verifica se o usuário ganhou
+function verifyWin() {
+	let closed = 0;
+	for (let i = 0; i < tableDim; i++) {
+		for (let j = 0; j < tableDim; j++) {
+			if (document.getElementById(i + "-" + j).style.backgroundColor != "rgb(48, 48, 48)") {
+				closed++;
+			}
+		}
+	}
+	if (closed == bombs.length) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// Define o jogo como perdido
+async function loss() {
+	if (cron_started) {
+		cron_started = 0;
+		pauseTimer();
+	}
+
+	lost = true;
+	const allCells = document.getElementsByClassName("cursorControl");
+	for (let i = 0; i < allCells.length; i++) {
+		allCells[i].style["cursor"] = "default";
+	}
+
+	for (let i = 0; i < bombs.length; i++) {
+		openCell(bombs[i][0], bombs[i][1]);
+	}
+
+
+	await new Promise((r) => setTimeout(r, 300));
+	try {
+		const wlGif = document.getElementById("wl-gif");
+		wlGif.setAttribute("src", "../assets/loss.gif");
+	} catch (error) {
+		const wlBox = document.getElementById("wl-box");
+		const wlGif = document.createElement("img");
+		wlGif.setAttribute("src", "../assets/loss.gif");
+		wlGif.setAttribute("id", "wl-gif");
+		wlBox.appendChild(wlGif);
+	}
+
+	document.getElementById("text-wl").innerHTML = "Você perdeu =(";
+    document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) +  " : " + returnData(second)}`;
+    document.getElementById("pontuacao-wl").innerHTML = "Pontuação: 0";
+    document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
+	
+	if (rivotril) {
+		let tempoInicial = timerRivotril() * 60;
+		let tempoPassado = minute * 60 + second;
+
+		// Tempo passado em segundos
+		let tmpTempo = tempoInicial - tempoPassado;
+
+		let minutosPassados = Math.floor(tmpTempo/60);
+		let segundosPassados = tmpTempo - minutosPassados*60;
+		document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minutosPassados) +  ":" + returnData(segundosPassados)}`;
+	}
+
+	window.location.href = "#popup-wl";
 }
 
 // Atualiza os valores dos sliders de acordo com a posição de inicio
@@ -410,25 +501,8 @@ function updateSlider() {
 function applySettings() {
 	const dimension = document.getElementById("grid-size").value;
 	const nBombs = document.getElementById("n-bombs").value;
+	updateTimer();
 	resetBoard(dimension, nBombs);
-}
-
-// Reseta o jogo
-function resetBoard(dimension, nBombs) {
-	let i = 0;
-	try {
-		while (game.hasChildNodes || i == 1000) {
-			game.removeChild(game.lastChild);
-			i++;
-		}
-	} catch (error) {}
-	startBoard(dimension, nBombs);
-}
-
-// Reseta o campo depois do final
-function finalReset() {
-	resetBoard(document.getElementById("grid-size").value, bombs.length);
-	window.location.href = "#";
 }
 
 // Mostra o valor dos sliders
@@ -448,9 +522,34 @@ function setBubble(range, bubble) {
 	bubble.innerHTML = val;
 }
 
+// Retorna a cor do número
+function getColor(n) {
+	let dict = {
+		1: "blue",
+		2: "green",
+		3: "red",
+		4: "purple",
+		5: "orange",
+		6: "yellow",
+		7: "pink",
+		8: "white",
+	};
+	return dict[n];
+}
+
+// Verifica se uma cordenada está em uma lista
+function verifyIn(x, y, list) {
+	for (let i = 0; i < list.length; i++) {
+		if (list[i][0] == x && list[i][1] == y) {
+			return true;
+		}
+	}
+	return false;
+}
+
 // Executada quanto iniciado
 document.addEventListener("DOMContentLoaded", () => {
 	let startDimension = 6;
 	let startBombsNumber = 5;
 	startBoard(startDimension, startBombsNumber);
-});
+})

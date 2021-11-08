@@ -39,12 +39,12 @@
                     <!-- Middle Infos -->
                     <div id="middle-info">
                         <!-- Normal -->
-                        <button id="normal-button" class="middle-button">
+                        <button id="normal-button" class="middle-button" onclick="changeMode('normal')">
                             Normal
                         </button>
 
                         <!-- Rivotril -->
-                        <button id="rivotril-button" class="middle-button">
+                        <button id="rivotril-button" class="middle-button" onclick="changeMode('rivotril')">
                             Rivotril
                         </button>
 
@@ -120,12 +120,12 @@
                         <p>Rivotril</p>
                         <p>02:40</p>
                         <p>12/09/2021 - 15:49</p>
-                        <p>18</p>
+                        <p>48</p>
                     </div>
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>6x6</p>
-                        <p>21 bombas</p>
+                        <p>11 bombas</p>
                         <p>Normal</p>
                         <p>00:45</p>
                         <p>12/09/2021 - 14:38</p>
@@ -134,16 +134,16 @@
                     <div class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>8x8</p>
-                        <p>52 bombas</p>
+                        <p>19 bombas</p>
                         <p>Normal</p>
                         <p>08:30</p>
                         <p>12/09/2021 - 14:15</p>
-                        <p>3328</p>
+                        <p>1216</p>
                     </div>
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>10x10</p>
-                        <p>85 bombas</p>
+                        <p>30 bombas</p>
                         <p>Normal</p>
                         <p>00:01</p>
                         <p>12/09/2021 - 13:50</p>
@@ -152,7 +152,7 @@
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>6x6</p>
-                        <p>25 bombas</p>
+                        <p>11 bombas</p>
                         <p>Rivotril</p>
                         <p>01:45</p>
                         <p>12/08/2021 - 13:45</p>
@@ -211,8 +211,10 @@
             <div id="popup-wl" class="popup-no-click">
                 <div class="popup-end" id="wl-box">
                     <!-- Text Win/Loss -->
-                    <p id="text-wl"></p>
-
+                    <h2 id="text-wl"></h2>
+                    <p id="tempo-wl"></p>
+                    <p id="pontuacao-wl"></p>
+                    <p id="cells-wl"></p>
                     <!-- Button -->
                     <button id="button-reiniciar" onclick="finalReset()">Reiniciar</button>
                 </div>

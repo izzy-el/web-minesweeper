@@ -315,6 +315,18 @@ ul:focus {
 	overflow-y: scroll;
 }
 
+#wl-gif{
+    height: 150px;
+}
+
+#text-wl {
+    margin-bottom: 10px;
+}
+
+#tempo-wl, #pontuacao-wl {
+    margin-bottom: -10px;
+}
+
 #win-gif {
 	position: absolute;
 	left: -2vw;
@@ -327,6 +339,10 @@ ul:focus {
 	left: -1vw;
 	top: 14vh;
 	display: none;
+}
+
+#normal-button {
+	color: red;
 }
 
 button:hover {

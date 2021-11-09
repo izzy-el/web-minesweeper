@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../styles/game.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <script src="../scripts/script.js" defer></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
             rel="stylesheet"
@@ -40,31 +41,46 @@
                     <!-- Middle Infos -->
                     <div id="middle-info">
                         <!-- Normal -->
-                        <button id="normal-button" class="middle-button">
+                        <button id="normal-button" class="middle-button" onclick="changeMode('normal')">
                             Normal
                         </button>
 
                         <!-- Rivotril -->
-                        <button id="rivotril-button" class="middle-button">
+                        <button id="rivotril-button" class="middle-button" onclick="changeMode('rivotril')">
                             Rivotril
                         </button>
 
                         <!-- Timer -->
-                        <p id="timer" class="middle-button">00:00</p>
+                        <p id="timer" class="middle-button">
+                            <span id="minute">00</span>:<span id="second">00</span>
+                        </p>
                     </div>
                 </div>
 
                 <div>
                     <div class="menu-item">
+                        <!-- Reset button -->
+                        <div class="right-menu">
+                            <input type="image"
+                                src="../assets/reset.png"
+                                alt="reset"
+                                id="reset-button"
+                                class="top-button"
+                                onclick="finalReset()"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
                         <!-- Cheat button -->
-                        <div id="right-menu">
-                            <a href=""
-                                ><img
-                                    src="../assets/cheat.png"
-                                    alt="cheat"
-                                    id="cheat-button"
-                                    class="top-button"
-                            /></a>
+                        <div class="right-menu">
+                            <input type="image"
+                                src="../assets/cheat.png"
+                                alt="cheat"
+                                id="cheat-button"
+                                class="top-button"
+                                onclick="activateCheat(3)"
+                            >
                         </div>
                     </div>
 
@@ -85,11 +101,9 @@
 
             <!-- Game -->
             <div id="game-space">
-                <img
-                    src="../assets/tmp-minesweeper-black.png"
-                    alt="minesweeper"
-                    id="game"
-                />
+                <div id="game">
+
+                </div>
             </div>
 
             <div id="game-history">
@@ -108,12 +122,12 @@
                         <p>Rivotril</p>
                         <p>02:40</p>
                         <p>12/09/2021 - 15:49</p>
-                        <p>18</p>
+                        <p>48</p>
                     </div>
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>6x6</p>
-                        <p>21 bombas</p>
+                        <p>11 bombas</p>
                         <p>Normal</p>
                         <p>00:45</p>
                         <p>12/09/2021 - 14:38</p>
@@ -122,16 +136,16 @@
                     <div class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>8x8</p>
-                        <p>52 bombas</p>
+                        <p>19 bombas</p>
                         <p>Normal</p>
                         <p>08:30</p>
                         <p>12/09/2021 - 14:15</p>
-                        <p>3328</p>
+                        <p>1216</p>
                     </div>
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>10x10</p>
-                        <p>85 bombas</p>
+                        <p>30 bombas</p>
                         <p>Normal</p>
                         <p>00:01</p>
                         <p>12/09/2021 - 13:50</p>
@@ -140,7 +154,7 @@
                     <div style="background-color: #ff2345" class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>6x6</p>
-                        <p>25 bombas</p>
+                        <p>11 bombas</p>
                         <p>Rivotril</p>
                         <p>01:45</p>
                         <p>12/08/2021 - 13:45</p>
@@ -155,60 +169,21 @@
                     <!-- Close -->
                     <a class="close" href="#">&times;</a>
 
-                    <datalist id="tickmarks-size">
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                        <option value="6"></option>
-                        <option value="7"></option>
-                        <option value="8"></option>
-                        <option value="9"></option>
-                        <option value="10"></option>
-                        <option value="11"></option>
-                        <option value="12"></option>
-                        <option value="13"></option>
-                        <option value="14"></option>
-                        <option value="15"></option>
-                        <option value="16"></option>
-                        <option value="17"></option>
-                        <option value="18"></option>
-                        <option value="19"></option>
-                        <option value="20"></option>
-                    </datalist>
-
-                    <datalist id="tickmarks-bombs">
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                        <option value="6"></option>
-                        <option value="7"></option>
-                        <option value="8"></option>
-                        <option value="9"></option>
-                        <option value="10"></option>
-                        <option value="11"></option>
-                        <option value="12"></option>
-                        <option value="13"></option>
-                        <option value="14"></option>
-                        <option value="15"></option>
-                        <option value="16"></option>
-                        <option value="17"></option>
-                        <option value="18"></option>
-                        <option value="19"></option>
-                        <option value="20"></option>
-                    </datalist>
-
                     <!-- Tamanho -->
                     <div class="slider">
                         <p>Tamanho:</p>
                         <input
                             type="range"
-                            list="tickmarks-size"
+                            class="range"
                             min="3"
                             max="20"
                             step="1"
                             name="grid-size"
                             id="grid-size"
+                            onchange="updateSlider()"
+                            onload="updateSliderValues()"
                         />
+                        <p class="bubble" id="size-bubble"></p>
                     </div>
 
                     <!-- Numero de bombas -->
@@ -216,19 +191,36 @@
                         <p>Bombas:</p>
                         <input
                             type="range"
-                            list="tickmarks-bombs"
+                            class="range"
                             min="3"
                             max="20"
                             step="1"
                             name="n-bombs"
                             id="n-bombs"
+                            onload="updateSliderValues()"
                         />
+                        <p class="bubble" id="bomb-bubble"></p>
                     </div>
 
                     <!-- Button Aplicar -->
-                    <button id="button-aplicar">Aplicar</button>
+                    <button id="button-aplicar" onclick="applySettings()">Aplicar</button>
+
                 </div>
             </div>
+
+            <!-- Popup Win/Loss -->
+            <div id="popup-wl" class="popup-no-click">
+                <div class="popup-end" id="wl-box">
+                    <!-- Text Win/Loss -->
+                    <h2 id="text-wl"></h2>
+                    <p id="tempo-wl"></p>
+                    <p id="pontuacao-wl"></p>
+                    <p id="cells-wl"></p>
+                    <!-- Button -->
+                    <button id="button-reiniciar" onclick="finalReset()">Reiniciar</button>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

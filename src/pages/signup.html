@@ -12,6 +12,7 @@
             href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
             rel="stylesheet"
         />
+        <script src="../scripts/checkForms.js"></script>
         <title>Cadastro - Mineles</title>
         <link rel="shortcut icon" href="../assets/favicon.ico" />
     </head>
@@ -38,7 +39,7 @@
                 </header>
 
                 <!-- Inputs -->
-                <div id="signup-fields">
+                <form action="../resources/signup.php" method="POST" id="signup-fields">
                     <!-- Nome Completo -->
                     <input
                         type="text"
@@ -46,6 +47,7 @@
                         name="name"
                         id="name"
                         class="field"
+                        required
                     />
                     <!-- Data de nascimento -->
                     <input
@@ -55,6 +57,7 @@
                         name="birthday"
                         id="birthday"
                         class="field"
+                        required
                     />
                     <!-- CPF -->
                     <input
@@ -63,6 +66,7 @@
                         name="cpf"
                         id="cpf"
                         class="field"
+                        required
                     />
                     <!-- Telefone -->
                     <input
@@ -72,6 +76,7 @@
                         id="phone"
                         class="field"
                         data-mask="(00) 0000-0000"
+                        required
                     />
                     <!-- E-mail -->
                     <input
@@ -80,6 +85,7 @@
                         name="email"
                         id="email"
                         class="field"
+                        required
                     />
                     <!-- Nome de usuário -->
                     <input
@@ -88,6 +94,7 @@
                         name="user"
                         id="user"
                         class="field"
+                        req
                     />
                     <!-- Senha -->
                     <input
@@ -96,6 +103,7 @@
                         name="pass"
                         id="pass"
                         class="field"
+                        required
                     />
                     <!-- Confirmação senha -->
                     <input
@@ -104,16 +112,17 @@
                         name="confirmation-pass"
                         id="confirmation-pass"
                         class="field"
+                        required
                     />
-                </div>
-
-                <!-- Buttons -->
-                <div id="signup-actions">
-                    <!-- <button type="submit" id="signup-button">Cadastrar</button> -->
-                    <a href="../pages/game.html" id="signup-button">
-                        Cadastrar
-                    </a>
-                </div>
+                    
+                    <!-- Buttons -->
+                    <div id="signup-actions">
+                        <button type="button" id="signup-button" onclick="checkFormSignup()">Cadastrar</button>
+                        <!-- <a href="../pages/game.html" id="signup-button">
+                            Cadastrar
+                        </a> -->
+                    </div>
+                </form>
             </div>
         </div>
     </body>

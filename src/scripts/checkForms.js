@@ -9,6 +9,22 @@ function checkFormSignup() {
     const pass = document.getElementById("pass");
     const confirmationPass = document.getElementById("confirmation-pass");
 
+    let elements = [];
+    elements.push(name);
+    elements.push(birthday);
+    elements.push(cpf);
+    elements.push(phone);
+    elements.push(email);
+    elements.push(user);
+    elements.push(pass);
+    elements.push(confirmationPass);
+
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].value == '') {
+            alert("Preencha todos os campos");
+            return;
+        }
+    }
 
     if (pass.value != confirmationPass.value) {
         pass.focus();
@@ -16,28 +32,8 @@ function checkFormSignup() {
         return;
     }
     
-    // $.post("check_av.php", {cpf:cpf , email:email, user:user},  
-    //     function(result) {  
-    //         if (result == "cpfCadastrado") {
-    //             // CPF já cadastrado
-    //             window.alert("CPF já cadastrado");
-    //         } else if (result == "emailCadastrado") {
-    //             // E-mail já cadastrado
-    //             window.alert("Email já cadastrado");
-    //         } else if (result == "userCadastrado") {
-    //             // Usuário já cadastrado
-    //             window.alert("Usuário já cadastrado");
-    //         } else {
-    //             // Tudo certo
-    //             mainForm.submit();
-    //         }
-    //     }
-    // );
-
     try {
         let xhttp = new XMLHttpRequest();
-
-        console.log(xhttp);
 
         if (!xhttp) {
             alert('Não foi possível criar um objeto XMLHttpRequest.');
@@ -49,29 +45,24 @@ function checkFormSignup() {
         let params = "cpf="+encodeURIComponent(cpf.value)+"&email="+encodeURIComponent(email.value)+"&user="+encodeURIComponent(user.value);
         xhttp.send(params);
 
-        console.log(params);
-
-        if (xhttp.readyState === XMLHttpRequest.DONE) {
-            if (xhttp.status === 200) {
-                let result = xhttp.responseText;
-                console.log(result);
-                if (result == "cpfCadastrado") {
-                    // CPF já cadastrado
-                    window.alert("CPF já cadastrado");
-                } else if (result == "emailCadastrado") {
-                    // E-mail já cadastrado
-                    window.alert("Email já cadastrado");
-                } else if (result == "userCadastrado") {
-                    // Usuário já cadastrado
-                    window.alert("Usuário já cadastrado");
-                } else if (result == "submit"){
-                    // Tudo certo
-                    mainForm.submit();
-                }
+        if (xhttp.status == 200) {
+            let result = xhttp.responseText;
+            console.log(result);
+            if (result == "cpfCadastrado") {
+                // CPF já cadastrado
+                window.alert("CPF já cadastrado");
+            } else if (result == "emailCadastrado") {
+                // E-mail já cadastrado
+                window.alert("Email já cadastrado");
+            } else if (result == "userCadastrado") {
+                // Usuário já cadastrado
+                window.alert("Usuário já cadastrado");
+            } else if (result == "submit"){
+                // Tudo certo
+                mainForm.submit();
             }
-            else {
-                alert('Um problema ocorreu.');
-            }
+        } else {
+            alert('Um problema ocorreu.');
         }
     } catch (e) {
         alert("Ocorreu uma exceção: " + e.description);

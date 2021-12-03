@@ -40,7 +40,7 @@
         $sql = "CREATE TABLE Users(
                     id INTEGER NOT NULL AUTO_INCREMENT,
                     name CHAR(50) NOT NULL,
-                    birthday DATE NOT NULL,
+                    birthday DATETIME NOT NULL,
                     cpf CHAR(11) NOT NULL UNIQUE,
                     phone CHAR(11) NOT NULL,
                     email CHAR(50) NOT NULL UNIQUE,

@@ -12,6 +12,14 @@ let usedCheat = false;
 let activeCheat = false;
 let openedCells = 0;
 let rivotril = false;
+let xhttp;
+
+// Setando o dia de hoje no formato yyyy-mm-dd.
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, "0");
+let mm = String(today.getMonth() + 1).padStart(2, "0");
+let yyyy = today.getFullYear();
+today = yyyy + "-" + mm + "-" + dd;
 
 // Desabilita o clique com o botão direito
 window.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -32,7 +40,8 @@ function timer() {
 	} else {
 		if (!notFlag) {
 			// Minuto inicial para o modo Rivotril
-			let tmpSecond = (timerRivotril() - Math.floor(timerRivotril())) * 60;
+			let tmpSecond =
+				(timerRivotril() - Math.floor(timerRivotril())) * 60;
 			minute = Math.floor(timerRivotril());
 			second = tmpSecond;
 			second++;
@@ -188,9 +197,75 @@ async function cellClick(i, j) {
 				}
 
 				document.getElementById("text-wl").innerHTML = "Você ganhou =)";
-				document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) + ":" + returnData(second)}`;
-				document.getElementById("pontuacao-wl").innerHTML = `Pontuação: ${getPoints()}`;
-				document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
+				document.getElementById("tempo-wl").innerHTML = `Tempo: ${
+					returnData(minute) + ":" + returnData(second)
+				}`;
+				document.getElementById(
+					"pontuacao-wl"
+				).innerHTML = `Pontuação: ${getPoints()}`;
+				document.getElementById(
+					"cells-wl"
+				).innerHTML = `Células abertas: ${openedCells}`;
+
+				// Adiciona o game no banco
+				try {
+					xhttp = new XMLHttpRequest();
+
+					if (!xhttp) {
+						alert(
+							"Não foi possível criar um objeto XMLHttpRequest."
+						);
+						return false;
+					}
+
+					xhttp.onreadystatechange = function () {
+						try {
+							if (xhttp.readyState === XMLHttpRequest.DONE) {
+								if (xhttp.status === 200) {
+									let resposta = xhttp.responseText;
+									alert(resposta);
+								} else {
+									alert("Um problema ocorreu.");
+								}
+							}
+						} catch (e) {
+							alert("Ocorreu uma exceção: " + e.description);
+						}
+					};
+
+					xhttp.open("POST", "../resources/insert_game.php", true);
+
+					xhttp.setRequestHeader(
+						"Content-Type",
+						"application/x-www-form-urlencoded"
+					);
+
+					let params =
+						"boardsize=" +
+						encodeURIComponent(
+							document.getElementById("grid-size").value
+						) +
+						"&numbombs=" +
+						encodeURIComponent(
+							document.getElementById("n-bombs").value
+						) +
+						"&gamemode=" +
+						encodeURIComponent(
+							rivotril == 1 ? "Rivotril" : "Normal"
+						) +
+						"&gametime=" +
+						encodeURIComponent(
+							returnData(minute) * 60 + returnData(second)
+						) +
+						"&datetime=" +
+						encodeURIComponent(today) +
+						"&score=" +
+						encodeURIComponent(getPoints());
+					xhttp.send(params);
+				} catch (e) {
+					alert("Ocorreu uma exceção: " + e.description);
+				}
+
 				window.location.href = "#popup-wl";
 			}
 		}
@@ -205,7 +280,8 @@ function openCell(i, j) {
 	const bg = cellToOpen.style.backgroundColor;
 	if (bg != "rgb(48, 48, 48)") {
 		// Retira a flag se houver
-		if (cellToOpen.hasChildNodes()) cellToOpen.removeChild(cellToOpen.lastChild);
+		if (cellToOpen.hasChildNodes())
+			cellToOpen.removeChild(cellToOpen.lastChild);
 
 		// Define o fundo para a célula e o cursor
 		cellToOpen.style["background-color"] = "rgb(48, 48, 48)";
@@ -408,7 +484,10 @@ function verifyWin() {
 	let closed = 0;
 	for (let i = 0; i < tableDim; i++) {
 		for (let j = 0; j < tableDim; j++) {
-			if (document.getElementById(i + "-" + j).style.backgroundColor != "rgb(48, 48, 48)") {
+			if (
+				document.getElementById(i + "-" + j).style.backgroundColor !=
+				"rgb(48, 48, 48)"
+			) {
 				closed++;
 			}
 		}
@@ -450,9 +529,13 @@ async function loss() {
 	}
 
 	document.getElementById("text-wl").innerHTML = "Você perdeu =(";
-	document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minute) + " : " + returnData(second)}`;
+	document.getElementById("tempo-wl").innerHTML = `Tempo: ${
+		returnData(minute) + " : " + returnData(second)
+	}`;
 	document.getElementById("pontuacao-wl").innerHTML = "Pontuação: 0";
-	document.getElementById("cells-wl").innerHTML = `Células abertas: ${openedCells}`;
+	document.getElementById(
+		"cells-wl"
+	).innerHTML = `Células abertas: ${openedCells}`;
 
 	if (rivotril) {
 		let tempoInicial = timerRivotril() * 60;
@@ -463,7 +546,9 @@ async function loss() {
 
 		let minutosPassados = Math.floor(tmpTempo / 60);
 		let segundosPassados = tmpTempo - minutosPassados * 60;
-		document.getElementById("tempo-wl").innerHTML = `Tempo: ${returnData(minutosPassados) + ":" + returnData(segundosPassados)}`;
+		document.getElementById("tempo-wl").innerHTML = `Tempo: ${
+			returnData(minutosPassados) + ":" + returnData(segundosPassados)
+		}`;
 	}
 
 	window.location.href = "#popup-wl";

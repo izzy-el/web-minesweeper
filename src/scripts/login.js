@@ -29,7 +29,7 @@ function checkFormLogin() {
 					if (xhttp.status === 200) {
 						let resposta = xhttp.responseText;
 						if (resposta == "Logado") {
-							window.location.replace("pages/game.html");
+							window.location.replace("pages/game.php");
 						} else {
 							alert("Usuário ou senha incorreta.");
 						}

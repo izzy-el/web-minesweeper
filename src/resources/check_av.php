@@ -47,5 +47,5 @@
         $conn->exec($query);
         echo "Registrado com sucesso!";
     } catch (PDOException $e) {
-        echo "Algo deu errado... : " + $e->getMessage();
+        echo "Algo deu errado... : " . $e->getMessage();
     }

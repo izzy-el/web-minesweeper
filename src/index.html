@@ -9,10 +9,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
-            rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
+        rel="stylesheet"
         />
         <title>Acesso - Mineles</title>
+        <script src="./scripts/login.js"></script>
         <link rel="shortcut icon" href="assets/favicon.ico" />
     </head>
     <body>
@@ -60,7 +61,8 @@
                 <!-- Buttons -->
                 <div id="login-actions">
                     <!-- <button type="submit" id="login-button">Login</button> -->
-                    <a id="login-button" href="pages/game.html"> Login </a>
+                    <!-- <a id="login-button" href="pages/game.html"> Login </a> -->
+                    <a id="login-button" onclick="checkFormLogin()"> Login </a>
                     <a id="signup-button" href="pages/signup.html">
                         Cadastrar
                     </a>

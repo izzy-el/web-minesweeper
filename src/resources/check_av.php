@@ -49,4 +49,3 @@
     } catch (PDOException $e) {
         echo "Algo deu errado... : " + $e->getMessage();
     }
-?>

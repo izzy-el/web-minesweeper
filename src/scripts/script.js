@@ -351,6 +351,7 @@ function resetBoard(dimension, nBombs) {
 			i++;
 		}
 	} catch (error) {}
+	usedCheat = false;
 	startBoard(dimension, nBombs);
 }
 
@@ -455,6 +456,11 @@ function getPoints() {
 	if (rivotril) {
 		score *= 1.5;
 	}
+
+	if (usedCheat) {
+		score = 0;
+	}
+	
 	return score;
 }
 

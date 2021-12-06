@@ -9,6 +9,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<script src="../scripts/edit-profile.js"></script>
+		<script src="../scripts/signup.js"></script>
 		<link
 			href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
 			rel="stylesheet"
@@ -80,8 +81,10 @@
 						value=""
 						name="phone"
 						id="phone"
+						onkeypress="mask(this, mphone);"
+						onblur="mask(this, mphone);"
 						class="field"
-						maxlength="14"
+						maxlength="15"
 					/>
 					<!-- E-mail -->
 					<input

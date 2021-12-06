@@ -48,10 +48,13 @@ function checkFormSignup() {
 					if (xhttp.status === 200) {
 						let resposta = xhttp.responseText;
 						alert(resposta);
-                        if(resposta == "Registrado com sucesso!"){
-                            url = window.location.href.replace("pages/signup.html", "");
-                            window.location.href = url
-                        }
+						if (resposta == "Registrado com sucesso!") {
+							url = window.location.href.replace(
+								"pages/signup.html",
+								""
+							);
+							window.location.href = url;
+						}
 					} else {
 						alert("Um problema ocorreu.");
 					}
@@ -61,7 +64,7 @@ function checkFormSignup() {
 			}
 		};
 
-		xhttp.open("POST", "../resources/check_av.php", true);
+		xhttp.open("POST", "../resources/signup.php", true);
 
 		xhttp.setRequestHeader(
 			"Content-Type",

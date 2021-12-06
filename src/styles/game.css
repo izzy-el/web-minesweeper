@@ -160,7 +160,7 @@ ul:focus {
 	width: 35vh;
 	display: flex;
 	align-items: center;
-    justify-content: center;
+	justify-content: center;
 	flex-direction: column;
 	gap: 2vh;
 }
@@ -256,7 +256,7 @@ ul:focus {
 }
 
 #reset-button {
-    width: 4vh;
+	width: 4vh;
 	height: 4vh;
 	vertical-align: center;
 }
@@ -331,16 +331,17 @@ ul:focus {
 	overflow-y: scroll;
 }
 
-#wl-gif{
-    height: 150px;
+#wl-gif {
+	height: 150px;
 }
 
 #text-wl {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
-#tempo-wl, #pontuacao-wl {
-    margin-bottom: -10px;
+#tempo-wl,
+#pontuacao-wl {
+	margin-bottom: -10px;
 }
 
 #win-gif {

@@ -13,13 +13,21 @@ let activeCheat = false;
 let openedCells = 0;
 let rivotril = false;
 let xhttp;
+let verifyWinFlag = 1;
 
 // Setando o dia de hoje no formato yyyy-mm-dd.
-let today = new Date();
-let dd = String(today.getDate()).padStart(2, "0");
-let mm = String(today.getMonth() + 1).padStart(2, "0");
-let yyyy = today.getFullYear();
-today = yyyy + "-" + mm + "-" + dd;
+let today =
+	new Date().getFullYear() +
+	"-" +
+	new Date().getMonth() +
+	"-" +
+	new Date().getDay() +
+	" " +
+	new Date().getHours() +
+	":" +
+	new Date().getMinutes() +
+	":" +
+	new Date().getSeconds();
 
 // Desabilita o clique com o botão direito
 window.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -181,8 +189,9 @@ async function cellClick(i, j) {
 				cellClick(i, j - 1);
 			}
 
-			if (verifyWin()) {
+			if (verifyWin() && verifyWinFlag) {
 				pauseTimer();
+				verifyWinFlag = 0;
 				await new Promise((r) => setTimeout(r, 300));
 
 				try {
@@ -207,6 +216,22 @@ async function cellClick(i, j) {
 					"cells-wl"
 				).innerHTML = `Células abertas: ${openedCells}`;
 
+				if (rivotril) {
+					let tempoInicial = timerRivotril() * 60;
+					let tempoPassado = minute * 60 + second;
+
+					// Tempo passado em segundos
+					let tmpTempo = tempoInicial - tempoPassado;
+
+					let minutosPassados = Math.floor(tmpTempo / 60);
+					let segundosPassados = tmpTempo - minutosPassados * 60;
+					document.getElementById("tempo-wl").innerHTML = `Tempo: ${
+						returnData(minutosPassados) +
+						":" +
+						returnData(segundosPassados)
+					}`;
+				}
+
 				// Adiciona o game no banco
 				try {
 					xhttp = new XMLHttpRequest();
@@ -223,7 +248,6 @@ async function cellClick(i, j) {
 							if (xhttp.readyState === XMLHttpRequest.DONE) {
 								if (xhttp.status === 200) {
 									let resposta = xhttp.responseText;
-									alert(resposta);
 								} else {
 									alert("Um problema ocorreu.");
 								}
@@ -240,6 +264,15 @@ async function cellClick(i, j) {
 						"application/x-www-form-urlencoded"
 					);
 
+					let tempoInicial = timerRivotril() * 60;
+					let tempoPassado = minute * 60 + second;
+
+					// Tempo passado em segundos
+					let tmpTempo = tempoInicial - tempoPassado;
+
+					let minutosPassados = Math.floor(tmpTempo / 60);
+					let segundosPassados = tmpTempo - minutosPassados * 60;
+
 					let params =
 						"boardsize=" +
 						encodeURIComponent(
@@ -251,16 +284,19 @@ async function cellClick(i, j) {
 						) +
 						"&gamemode=" +
 						encodeURIComponent(
-							rivotril == 1 ? "Rivotril" : "Normal"
+							rivotril == true ? "Rivotril" : "Normal"
 						) +
 						"&gametime=" +
-						encodeURIComponent(
-							returnData(minute) * 60 + returnData(second)
-						) +
+						(rivotril == true
+							? returnData(minutosPassados) * 60 +
+							  returnData(segundosPassados)
+							: returnData(minute) * 60 + returnData(second)) +
 						"&datetime=" +
 						encodeURIComponent(today) +
 						"&score=" +
-						encodeURIComponent(getPoints());
+						encodeURIComponent(getPoints()) +
+						"&result=" +
+						encodeURIComponent(1);
 					xhttp.send(params);
 				} catch (e) {
 					alert("Ocorreu uma exceção: " + e.description);
@@ -352,6 +388,7 @@ function resetBoard(dimension, nBombs) {
 		}
 	} catch (error) {}
 	usedCheat = false;
+	verifyWinFlag = 1;
 	startBoard(dimension, nBombs);
 }
 
@@ -359,6 +396,12 @@ function resetBoard(dimension, nBombs) {
 function finalReset() {
 	resetBoard(document.getElementById("grid-size").value, bombs.length);
 	window.location.href = "#";
+	window.location.reload();
+}
+
+// Reseta depois de mudar para rivotril
+function resetRivotril() {
+	resetBoard(document.getElementById("grid-size").value, bombs.length);
 }
 
 // Botão de Trapaça
@@ -460,13 +503,13 @@ function getPoints() {
 	if (usedCheat) {
 		score = 0;
 	}
-	
+
 	return score;
 }
 
 // Muda o modo
 function changeMode(mode) {
-	finalReset();
+	resetRivotril();
 
 	const buttonNormal = document.getElementById("normal-button");
 	const buttonRivotril = document.getElementById("rivotril-button");
@@ -557,6 +600,69 @@ async function loss() {
 		}`;
 	}
 
+	// Adiciona o game no banco
+	try {
+		xhttp = new XMLHttpRequest();
+
+		if (!xhttp) {
+			alert("Não foi possível criar um objeto XMLHttpRequest.");
+			return false;
+		}
+
+		xhttp.onreadystatechange = function () {
+			try {
+				if (xhttp.readyState === XMLHttpRequest.DONE) {
+					if (xhttp.status === 200) {
+						let resposta = xhttp.responseText;
+						// alert(resposta);
+					} else {
+						alert("Um problema ocorreu.");
+					}
+				}
+			} catch (e) {
+				alert("Ocorreu uma exceção: " + e.description);
+			}
+		};
+
+		xhttp.open("POST", "../resources/insert_game.php", true);
+
+		xhttp.setRequestHeader(
+			"Content-Type",
+			"application/x-www-form-urlencoded"
+		);
+
+		let tempoInicial = timerRivotril() * 60;
+		let tempoPassado = minute * 60 + second;
+
+		// Tempo passado em segundos
+		let tmpTempo = tempoInicial - tempoPassado;
+
+		let minutosPassados = Math.floor(tmpTempo / 60);
+		let segundosPassados = tmpTempo - minutosPassados * 60;
+
+		let params =
+			"boardsize=" +
+			encodeURIComponent(document.getElementById("grid-size").value) +
+			"&numbombs=" +
+			encodeURIComponent(document.getElementById("n-bombs").value) +
+			"&gamemode=" +
+			encodeURIComponent(rivotril == true ? "Rivotril" : "Normal") +
+			"&gametime=" +
+			(rivotril == true
+				? returnData(minutosPassados) * 60 +
+				  returnData(segundosPassados)
+				: returnData(minute) * 60 + returnData(second)) +
+			"&datetime=" +
+			encodeURIComponent(today) +
+			"&score=" +
+			encodeURIComponent('0') +
+			"&result=" +
+			encodeURIComponent(0);
+		xhttp.send(params);
+	} catch (e) {
+		alert("Ocorreu uma exceção: " + e.description);
+	}
+
 	window.location.href = "#popup-wl";
 }
 
@@ -637,7 +743,19 @@ function verifyIn(x, y, list) {
 
 // Executada quanto iniciado
 document.addEventListener("DOMContentLoaded", () => {
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+
 	let startDimension = 6;
 	let startBombsNumber = 5;
+
+	// let startDimension = urlParams.get('sd');
+	// let startBombsNumber = urlParams.get('sb');
 	startBoard(startDimension, startBombsNumber);
 });
+
+// Executada para exibir o Popup
+function showPopup(id) {
+	const popup = document.getElementById(id);
+	popup.style["display"] = "block";
+}

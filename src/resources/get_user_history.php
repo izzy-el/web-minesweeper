@@ -1,4 +1,5 @@
 <?php
+
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
 $dbpass = '';
@@ -20,23 +21,36 @@ try {
     $stmt = $conn->query($query);
     if ($stmt->rowCount() >= 1) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = $row['result'];
             $bsize = $row['board_size'];
             $nbombs = $row['num_bombs'];
             $gmode = $row['game_mode'];
             $gtime = $row['game_time'];
             $gdate = explode(" ", $row['date_time'])[0];
             $score = $row['score'];
-
-            echo '<div class="history-record">';
-            echo "<p>$_name</p>";
-            echo "<p>$bsize x $bsize</p>";
-            echo "<p>$nbombs bombas</p>";
-            echo "<p>$gmode</p>";
-            echo "<p>$gtime s</p>";
-            echo "<p>$gdate</p>";
-            echo "<p>$score pontos</p>";
-
-            echo "</div>";
+            
+            if($result == 1){
+                echo '<div class="history-record">';
+                echo "<p>$_name</p>";
+                echo "<p>$bsize x $bsize</p>";
+                echo "<p>$nbombs bombas</p>";
+                echo "<p>$gmode</p>";
+                echo "<p>$gtime s</p>";
+                echo "<p>$gdate</p>";
+                echo "<p>$score pontos</p>";
+                echo "</div>";
+            } 
+            else {   
+                echo '<div class="history-record" style="background-color: #ff2345" >';
+                echo "<p>$_name</p>";
+                echo "<p>$bsize x $bsize</p>";
+                echo "<p>$nbombs bombas</p>";
+                echo "<p>$gmode</p>";
+                echo "<p>$gtime s</p>";
+                echo "<p>$gdate</p>";
+                echo "<p>$score pontos</p>";
+                echo "</div>";
+            }
         }
     }
     else{
@@ -48,4 +62,3 @@ try {
 } catch (PDOException $e) {
     echo "Algo deu errado... : " . $e->getMessage();
 }
-?>

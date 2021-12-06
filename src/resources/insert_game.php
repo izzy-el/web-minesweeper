@@ -14,6 +14,7 @@ $gamemode = $_POST["gamemode"];
 $gametime = $_POST["gametime"];
 $datetime = $_POST["datetime"];
 $score = $_POST["score"];
+$result = $_POST["result"];
 
 
 // Conecta no banco de dados
@@ -39,7 +40,7 @@ try {
 
 // Cadastra o game no banco
 try {
-    $query = "INSERT INTO game(user_id, board_size, num_bombs, game_mode, game_time, date_time, score) VALUES ('$_userID', '$boardsize', '$numbombs', '$gamemode', '$gametime', '$datetime', '$score')";
+    $query = "INSERT INTO game(user_id, board_size, num_bombs, game_mode, game_time, date_time, score, result) VALUES ($_userID, $boardsize, $numbombs, '$gamemode', $gametime, '$datetime', $score, $result)";
     $conn->exec($query);
     echo "done";
     // $stmt = $conn->query($query);

@@ -48,6 +48,10 @@ function checkFormSignup() {
 					if (xhttp.status === 200) {
 						let resposta = xhttp.responseText;
 						alert(resposta);
+                        if(resposta == "Registrado com sucesso!"){
+                            url = window.location.href.replace("pages/signup.html", "");
+                            window.location.href = url
+                        }
 					} else {
 						alert("Um problema ocorreu.");
 					}

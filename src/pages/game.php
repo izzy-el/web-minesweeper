@@ -106,17 +106,18 @@
 
                 </div>
             </div>
-
             <div id="game-history">
                 <header id="history-title">
                     <h2>HISTÓRICO</h2>
-                    <a href="../pages/global-ranking.html" id="ranking-button">
+                    <a href="../pages/global-ranking.php" id="ranking-button">
                         RANKING GLOBAL
                     </a>
                 </header>
-
+                
                 <div id="scrollable-history">
-                    <div class="history-record">
+                    <?php include "../resources/get_user_history.php"; ?>
+
+                    <!-- <div class="history-record">
                         <p>Diogo Silveira dos Santos</p>
                         <p>4x4</p>
                         <p>3 bombas</p>
@@ -161,7 +162,7 @@
                         <p>12/08/2021 - 13:45</p>
                         <p>0</p>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Popup Settings -->

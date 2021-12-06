@@ -23,6 +23,7 @@ try {
     if ($stmt->rowCount() >= 1) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             // Precisa testar se isso aqui tá certo
+            $_SESSION["id"] = $row["id"];
             $_SESSION["name"] = $row["name"];
             $_SESSION["birthday"] = $row["birthday"];
             $_SESSION["cpf"] = $row["cpf"];

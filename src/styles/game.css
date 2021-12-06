@@ -39,7 +39,7 @@ li {
 .history-record {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	align-items: center;
 	height: 40px;
 	width: 70vw;
@@ -56,12 +56,12 @@ li {
 }
 
 .history-record p:first-child {
-	width: 20vw;
+	width: 15vw;
 	text-align: center;
 }
 
 .history-record p:nth-last-child(2) {
-	width: 14vw;
+	width: 10vw;
 	text-align: center;
 }
 

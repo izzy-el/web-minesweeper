@@ -33,7 +33,7 @@ if (!isset($_SESSION["username"])) {
                     <img src="../assets/menu.png" alt="menu" id="menu-img" class="top-button" />
                 </div>
                 <ul id="left-item" class="dropdown">
-                    <li><a href="./edit-profile.html">Meu Perfil</a></li>
+                    <li><a href="./edit-profile.php">Meu Perfil</a></li>
                     <li><a href="../resources/logout.php">Sair</a></li>
                 </ul>
             </div>

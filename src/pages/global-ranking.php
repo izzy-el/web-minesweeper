@@ -1,38 +1,46 @@
 <!DOCTYPE html>
+<?php session_start(); 
+if (!isset($_SESSION["username"])) {
+    header("location: ../index.php");
+    exit; 
+}
+?>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../styles/global.css" />
-        <link rel="stylesheet" href="../styles/global-ranking.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap"
-            rel="stylesheet"
-        />
-        <title>Ranking Global - Mineles</title>
-        <link rel="shortcut icon" href="../assets/favicon.ico" />
-    </head>
-    <body>
-        <header class="ranking-header">
-            <h1>Ranking Global</h1>
-        </header>
-        <a class="go-back" href="game.html">
-            <img src="../assets/back.png" alt="go-back-arrow">
-        </a>
-        <table>
-            <tr>
-                <th>Posição</th>
-                <th>Username</th>
-                <th>Tamanho do Tabuleiro</th>
-                <th>Tempo</th>
-                <th>Número de Bombas</th>
-                <th>Rivotril</th>
-                <th>Pontuação</th>
-            </tr>
-            <tr>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/global-ranking.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap" rel="stylesheet" />
+    <title>Ranking Global - Mineles</title>
+    <link rel="shortcut icon" href="../assets/favicon.ico" />
+</head>
+
+<body>
+    <header class="ranking-header">
+        <h1>Ranking Global</h1>
+    </header>
+    <a class="go-back" href="game.php">
+        <img src="../assets/back.png" alt="go-back-arrow">
+    </a>
+    <table>
+        <tr>
+            <th>Posição</th>
+            <th>Username</th>
+            <th>Tamanho do Tabuleiro</th>
+            <th>Tempo</th>
+            <th>Número de Bombas</th>
+            <th>Rivotril</th>
+            <th>Pontuação</th>
+        </tr>
+
+        <?php include "../resources/get_global_ranking.php"; ?>
+
+        <!-- <tr>
                 <td>1</td>
                 <td>JhonesBR</td>
                 <td>10x10</td>
@@ -122,7 +130,8 @@
                 <td>16</td>
                 <td></td>
                 <td>400</td>
-            </tr>
-        </table>
-    </body>
+            </tr> -->
+    </table>
+</body>
+
 </html>

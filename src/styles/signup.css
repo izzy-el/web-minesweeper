@@ -36,7 +36,11 @@ button {
 	align-items: center;
 	justify-content: center;
 	background: rgb(20, 113, 163);
-	background: linear-gradient(42069deg, rgba(20, 113, 163, 1) 0%, rgba(221, 49, 49, 1) 100%);
+	background: linear-gradient(
+		42069deg,
+		rgba(20, 113, 163, 1) 0%,
+		rgba(221, 49, 49, 1) 100%
+	);
 }
 
 #signup {

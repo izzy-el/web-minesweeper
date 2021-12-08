@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php session_start(); 
+if (!isset($_SESSION["username"])) {
+    header("location: ../index.php");
+    exit; 
+}
+?>
+
 <html lang="pt-br">
 
 <head>
@@ -28,7 +34,7 @@
                 </div>
                 <ul id="left-item" class="dropdown">
                     <li><a href="./edit-profile.html">Meu Perfil</a></li>
-                    <li><a href="../index.php">Sair</a></li>
+                    <li><a href="../resources/logout.php">Sair</a></li>
                 </ul>
             </div>
 
